@@ -1,6 +1,6 @@
 #pragma once
 #include "QInt.h"
-class Convert
-{
-};
 
+
+bool* DecToBin(QInt x);
+QInt BinToDec(bool* bit);
