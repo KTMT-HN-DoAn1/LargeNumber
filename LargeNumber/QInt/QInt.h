@@ -26,5 +26,13 @@ public:
 	QInt operator^(const QInt&);
 	//Toán tử ~.
 	QInt& operator~();
+	//Phép toán dịch phải(Shift Right).
+	QInt operator >> (const int&);
+	//Phép toán dịch trái(Shift Left).
+	QInt operator << (const int&);
+	//Phép toán xoay trái.
+	QInt& RoL(int n);
+	//Phép toán xoay phải.
+	QInt& RoR(int n);
 
 };

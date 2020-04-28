@@ -252,3 +252,68 @@ QInt& QInt::operator~()
 	}
 	return *this;
 }
+
+QInt QInt::operator>>(const int& number)
+{
+	QInt result;
+	//Dịch phải phần tử đầu tiên của mảng data.
+	result.data[0] = this->data[0] >> number;
+	for (int i = 1; i < 4; i++)
+	{
+
+		for (int j = 0; j < number; j++)
+		{
+			result.data[i - 1] = result.data[i - 1] | (((1 << j) & this->data[i]) << (32 - number + j));
+		}
+		//Dịch phải các phần tử còn lại.
+		result.data[i] = this->data[i] >> number;
+	}
+	return result;
+}
+
+QInt QInt::operator<<(const int& number)
+{
+	QInt result;
+	//Dịch trái phần tử cuối của mảng data.
+	result.data[3] = this->data[3] << number;
+	for (int i = 2; i >= 0; i--)
+	{
+
+		for (int j = 0; j < number; j++)
+		{
+			result.data[i + 1] = result.data[i + 1] | (((1 << (32 - j - 1)) & this->data[i]) >> (32 - number));
+		}
+		//Dịch trái các phần tử còn lại.
+		result.data[i] = this->data[i] << number;
+	}
+	return result;
+
+}
+
+QInt& QInt::RoL(int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		//Lấy bit đầu ra
+		int temp = (1 << (32 - 1)) & this->data[0];
+		//Dịch trái 1 bit
+		*this = *this << 1;
+		//Lấy bit temp gán vào bit cuối cùng
+		this->data[3] = this->data[3] | (temp >> (32 - 1));
+	}
+	return *this;
+}
+
+QInt& QInt::RoR(int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		//Lấy bit cuối ra
+		int temp = 1 & this->data[3];
+		//Dịch phải 1 bit
+		*this = *this >> 1;
+		//Lấy bit temp gán vào bit đầu tiên
+		this->data[0] = this->data[0] | (temp << (32 - 1));
+	}
+	return *this;
+}
