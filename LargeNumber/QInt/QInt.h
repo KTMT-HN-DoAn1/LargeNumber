@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <string>
 
@@ -13,6 +13,13 @@ public:
 	QInt(QInt& q);
 	~QInt();
 
+	//Toán tử &.
+	QInt operator&(const QInt&);
+	//Toán tử |.
+	QInt operator|(const QInt&);
+	//Toán tử ^.
+	QInt operator^(const QInt&);
+	//Toán tử ~.
+	QInt& operator~();
 
-	
 };
