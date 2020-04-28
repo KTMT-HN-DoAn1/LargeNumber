@@ -13,6 +13,7 @@ public:
 	QInt(QInt& q);
 	~QInt();
 
-
+	void scanQInt();
+	void printQInt();
 	
 };

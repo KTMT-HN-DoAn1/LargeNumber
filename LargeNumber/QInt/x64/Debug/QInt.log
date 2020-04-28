@@ -1,2 +1,4 @@
-﻿  Main.cpp
-  QInt.vcxproj -> C:\Users\Minh Tan\Documents\GitHub\LargeNumber\LargeNumber\x64\Debug\QInt.exe
+﻿  QInt.cpp
+E:\Hoc tap\Study\Nam hai\HK2\KTMT-HN\LargeNumber\LargeNumber\QInt\QInt.cpp(22,29): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\Hoc tap\Study\Nam hai\HK2\KTMT-HN\LargeNumber\LargeNumber\QInt\QInt.cpp(47,29): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  QInt.vcxproj -> E:\Hoc tap\Study\Nam hai\HK2\KTMT-HN\LargeNumber\LargeNumber\x64\Debug\QInt.exe
