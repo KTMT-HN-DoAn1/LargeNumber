@@ -13,6 +13,11 @@ public:
 	QInt(QInt& q);
 	~QInt();
 
+	//Hàm nhập từ console
+	void scanQInt();
+	//Hàm xuất ra console
+	void printQInt();
+
 	//Toán tử &.
 	QInt operator&(const QInt&);
 	//Toán tử |.
