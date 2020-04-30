@@ -317,3 +317,29 @@ QInt& QInt::RoR(int n)
 	}
 	return *this;
 }
+
+QInt QInt::operator+(QInt& q)
+{
+	QInt res;
+	int nho = 0;
+	int bitRes = 0;
+	for (int i = 0; i < 128; i++)
+	{
+		bitRes = (*this >> i).data[3] & 1 + (q >> i).data[3] & 1 + nho;
+		if (bitRes == 1)
+		{
+			res.data[(127 - i) / 32] = res.data[(127 - i) / 32] | (1 << ((127 - i) % 32));
+			nho = 0;
+		}
+		else if (bitRes == 2)
+		{
+			nho = 1;
+		}
+		else if (bitRes == 3)
+		{
+			res.data[(127 - i) / 32] = res.data[(127 - i) / 32] | (1 << ((127 - i) % 32));
+			nho = 1;
+		}
+	}
+	return res;
+}

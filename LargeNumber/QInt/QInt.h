@@ -35,4 +35,6 @@ public:
 	//Phép toán xoay phải.
 	QInt& RoR(int n);
 
+	QInt operator + (QInt&);
+
 };
