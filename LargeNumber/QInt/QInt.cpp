@@ -12,6 +12,15 @@ QInt::QInt(QInt& q)
 		data[i] = q.data[i];
 }
 
+QInt::QInt(int q)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		data[i] = 0;
+	}
+	data[3] = q;
+}
+
 QInt::~QInt()
 {
 }
@@ -342,4 +351,155 @@ QInt QInt::operator+(QInt& q)
 		}
 	}
 	return res;
+}
+
+QInt QInt::operator-(QInt&q)
+{
+	QInttoTwoComplement(q);
+	QInt result;
+	result = *this + q;
+	return result;
+}
+
+QInt QInt::operator*(QInt&q)
+{
+	bool negative = false;
+	if ((this->negative() && !q.negative()) || (!this->negative() && q.negative()))
+	{
+		negative = true;
+	}
+	if (this->negative())
+	{
+		QInttoTwoComplement(*this);
+	}
+	if (q.negative())
+	{
+		QInttoTwoComplement(q);
+	}
+	QInt result;
+	QInt p(1);
+	while (!q.zero())
+	{
+		if (((q & p) - p).zero()) result = result + *this;
+		*this = *this << 1;
+		q = q >> 1;
+	}
+	if (negative)
+	{
+		QInttoTwoComplement(result);
+	}
+	return result;
+}
+
+QInt QInt::operator/(QInt&q)
+{
+
+	return QInt();
+}
+
+bool QInt::operator>(QInt&q)
+{
+	if ((this->negative()) && (!q.negative()))
+	{
+		return false;
+	}
+	if ((!this->negative()) && (q.negative()))
+	{
+		return true;
+	}
+	if ((this->negative()) && (q.negative()))
+	{
+		QInttoTwoComplement(*this);
+		QInttoTwoComplement(q);
+		for (int i = 127; i >= 0; i--)
+		{
+			if (((*this >> i).data[3] & 1) < (q >> i).data[3] & 1)return true;
+		}
+		return false;
+	}
+	for (int i = 127; i >= 0; i--)
+	{
+		if (((*this >> i).data[3] & 1) > (q >> i).data[3] & 1)return true;
+	}
+	return false;
+}
+
+bool QInt::operator<(QInt&q)
+{
+	if ((this->negative()) && (!q.negative()))
+	{
+		return true;
+	}
+	if ((!this->negative()) && (q.negative()))
+	{
+		return false;
+	}
+	if ((this->negative()) && (q.negative()))
+	{
+		QInttoTwoComplement(*this);
+		QInttoTwoComplement(q);
+		for (int i = 127; i >= 0; i--)
+		{
+			if (((*this >> i).data[3] & 1) > (q >> i).data[3] & 1)return true;
+		}
+		return false;
+	}
+	for (int i = 127; i >= 0; i--)
+	{
+		if (((*this >> i).data[3] & 1) < (q >> i).data[3] & 1)return true;
+	}
+	return false;
+}
+
+bool QInt::operator==(QInt&q)
+{
+	if ((*this > q) || (*this < q))return false;
+	return true;
+}
+
+bool QInt::operator<=(QInt&q)
+{
+	if ((*this < q) || (*this == q))return true;
+	return false;
+}
+
+bool QInt::operator>=(QInt&q)
+{
+	if ((*this > q) || (*this == q))return true;
+	return false;
+}
+
+QInt QInt::operator=(const QInt&q)
+{
+	if (this != &q)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			this->data[i] = q.data[i];
+		}
+	}
+	return *this;
+}
+
+QInt QInt::QInttoTwoComplement(QInt x)
+{
+	QInt q(1);
+	x = ~x + q;
+	return (x);
+}
+
+bool QInt::negative()
+{
+	if ((*this>>127).data[3]==1)
+	return true;
+	return false;
+}
+
+bool QInt::zero()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (this->data[i] != 0)return false;
+	}
+	return true;
 }

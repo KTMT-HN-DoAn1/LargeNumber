@@ -11,6 +11,7 @@ public:
 
 	QInt();
 	QInt(QInt& q);
+	QInt(int q);
 	~QInt();
 
 	//Hàm nhập từ console
@@ -34,7 +35,28 @@ public:
 	QInt& RoL(int n);
 	//Phép toán xoay phải.
 	QInt& RoR(int n);
-
+	//Phép toán +
 	QInt operator + (QInt&);
-
+	//Phép toán -
+	QInt operator - (QInt&);
+	//Phép toán *
+	QInt operator *(QInt&);
+	//Phep toan /
+	QInt operator /(QInt&);
+	//Phep toan >
+	bool operator >(QInt&);
+	//Phep toan <
+	bool operator <(QInt&);
+	//Toan tu ==
+	bool operator ==(QInt&);
+	//Toan tu <=
+	bool operator <=(QInt&);
+	//Toan tu >=
+	bool operator >=(QInt&);
+	//Toan tu =
+	QInt operator =(const QInt&);
+	//Hàm chuyển sang bù 2
+	QInt QInttoTwoComplement(QInt x);
+	bool negative();
+	bool zero();
 };

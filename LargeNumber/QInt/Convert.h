@@ -28,3 +28,4 @@ void increase(string& s);
 
 //Hàm chuyển mảng bool bit sang chuỗi string bit tương ứng
 string BoolToString(bool* bin);
+
