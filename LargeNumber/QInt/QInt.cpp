@@ -393,8 +393,41 @@ QInt QInt::operator*(QInt&q)
 
 QInt QInt::operator/(QInt&q)
 {
-
-	return QInt();
+	QInt temp;
+	QInt p(1);
+	if (this->zero() ||q.zero())return temp;
+	int k = 128;
+	bool negative = false;
+	if ((this->negative() && !q.negative()) || (!this->negative() && q.negative()))
+	{
+		negative = true;
+	}
+	if (this->negative())
+	{
+		QInttoTwoComplement(*this);
+	}
+	if (q.negative())
+	{
+		QInttoTwoComplement(q);
+	}
+	QInt result;
+	while (k != 0)
+	{
+		temp = temp | ((*this >> k)& p);
+		if (temp >= q)
+		{
+			result = result + p;
+			temp = temp - q;
+		}
+		else result = result << 1;
+		temp = temp << 1;
+		k--;
+	}
+	if (negative)
+	{
+		result = ~result + p;
+	}
+	return result;
 }
 
 bool QInt::operator>(QInt&q)
