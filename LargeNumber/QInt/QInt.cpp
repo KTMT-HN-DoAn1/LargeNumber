@@ -268,18 +268,70 @@ QInt& QInt::operator~()
 }
 QInt QInt::operator>>(const int& number)
 {
-	QInt result;
-	//Dịch phải phần tử đầu tiên của mảng data.
-	result.data[0] = this->data[0] >> number;
-	for (int i = 1; i < 4; i++)
+	QInt result,temp;
+	int num = 0;
+	if (number >= 128) return result;
+	if (number < 32)
+	{
+		//Dịch phải phần tử đầu tiên của mảng data.
+		//(number >= 32) ? (result.data[0] = 0) : (result.data[0] = (this->data[0] >> number));
+		result.data[0] = this->data[0] >> number;
+		for (int i = 1; i < 4; i++)
+		{
+			//(number >= 32) ? (result.data[i] = 0) : (result.data[i] = this->data[i] >> number);
+			result.data[i] = this->data[i] >> number;
+
+			for (int j = 0; j < number; j++)
+			{
+				result.data[i] = result.data[i] | (((1 << j) & this->data[i - 1]) << (32 - number + j));
+			}
+		}
+	}
+	else if (number < 64)
 	{
 
-		for (int j = 0; j < number; j++)
+		for (int i = 1; i < 4; i++)
 		{
-			result.data[i - 1] = result.data[i - 1] | (((1 << j) & this->data[i]) << (32 - number + j));
+			temp.data[i] = this->data[i - 1];
 		}
-		//Dịch phải các phần tử còn lại.
-		result.data[i] = this->data[i] >> number;
+		num = number % 32;
+		for (int i = 2; i < 4; i++)
+		{
+			result.data[i] = temp.data[i] >> num;
+
+			for (int j = 0; j < num; j++)
+			{
+				result.data[i] = result.data[i] | (((1 << j) & temp.data[i - 1]) << (32 - num + j));
+			}
+		}
+	}
+	else if (number < 96)
+	{
+
+		for (int i = 3; i < 4; i++)
+		{
+			temp.data[i] = this->data[i - 2];
+		}
+		num = number % 32;
+		for (int i = 1; i < 4; i++)
+		{
+			result.data[i] = temp.data[i] >> num;
+
+			for (int j = 0; j < num; j++)
+			{
+				result.data[i] = result.data[i] | (((1 << j) & temp.data[i - 1]) << (32 - num + j));
+			}
+		}
+	}
+	else if (number < 128)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			result.data[i] = 0;
+		}
+		result.data[3] = this->data[0];
+		result.data[3] >>= number % 32;
+
 	}
 	return result;
 }
@@ -339,11 +391,16 @@ QInt QInt::operator+(QInt& q)
 	int bitRes = 0,temp1,temp2;
 	for (int i = 0; i < 128; i++)
 	{
-		temp1 = (*this >> i).data[3] & 1;
+		if (i == 32)
+		{
+			i = 32;
+		}
+ 		temp1 = (*this >> i).data[3] & 1;
 		temp2 = (q >> i).data[3] & 1;
 		bitRes = temp1 + temp2 + nho;
+		
 		if (bitRes == 1)
-		{
+		{                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 			res.data[(127 - i) / 32] = res.data[(127 - i) / 32] | (1 << (i % 32));
 			nho = 0;
 		}

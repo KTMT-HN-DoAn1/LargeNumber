@@ -26,6 +26,6 @@ int main(int argc, char* argv[])
 
 	//}
 	//return 0;
-	cout << hexaAdd("ABCDEF234", "ABCDEF234") << endl;
+	cout << hexaAdd("ABCDEF234", "-ABCDEF234") << endl;
 	system("pause");
 }

@@ -62,9 +62,13 @@ public:
 	bool zero();
 
 };
-//
+//Tính bù 2 từ dạng QInt
 QInt QInttoTwoComplement(QInt& x);
+//Tính bù 2 từ mảng bool bit
 bool* twoComlement(bool* bit);
+//Hàm tính chuỗi số nhân 2
 string strMultiTwo(string s);
+//Hàm tính chuỗi số cộng 1
 string strPlusOne(string s);
+//Hàm chuyển mảng bool bit sang chuỗi thập phân
 string BinToDecStr(bool* bit);
