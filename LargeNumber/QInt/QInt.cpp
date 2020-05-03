@@ -6,11 +6,12 @@ QInt::QInt()
 		data[i] = 0;
 }
 
-QInt::QInt(QInt& q)
+QInt::QInt(const QInt& q)
 {
 	for (int i = 0; i < 4; i++)
 		data[i] = q.data[i];
 }
+
 
 QInt::QInt(int q)
 {
@@ -20,7 +21,6 @@ QInt::QInt(int q)
 	}
 	data[3] = q;
 }
-
 QInt::~QInt()
 {
 }
@@ -78,6 +78,31 @@ string strPlusOne(string s)
 	return s;
 }
 
+string BinToDecStr(bool* bit)
+{
+	string s = "0";
+	int index = 0;
+	for (int i = 0; i < 128; ++i)
+	{
+		if (bit[i]) {
+			index = i;
+			break;
+		}
+	}
+	for (int i = index; i < 128; ++i)
+	{
+		s = strMultiTwo(s);
+		if (bit[i]) {
+			s = strPlusOne(s);
+		}
+	}
+	if (bit[0])
+	{
+		s.insert(s.begin(), '-');
+	}
+
+	return s;
+}
 string strDivTwo(string s)
 {
 	int add, next_add = 0;
@@ -118,7 +143,7 @@ bool* twoComlement(bool* bit)
 
 	for (int i = flag - 1; i > 0; --i) {
 		bit[i] = bit[i] ^ 1;
-	}
+	}		
 
 	return bit;
 }
@@ -179,8 +204,7 @@ void QInt::scanQInt()
 
 void QInt::printQInt()
 {
-	string s = "0";
-
+	
 	// Mảng chứa 128bits
 	bool* bit = new bool[128];
 	for (int i = 0; i < 128; i++)
@@ -199,28 +223,9 @@ void QInt::printQInt()
 		isNegative = true;
 		bit = twoComlement(bit);
 	}
+	string s = BinToDecStr(bit);
 
-	//
-	int index = 0;
-	for (int i = 0; i < 128; ++i)
-	{
-		if (bit[i]) {
-			index = i;
-			break;
-		}
-	}
-	for (int i = index; i < 128; ++i)
-	{
-		s = strMultiTwo(s);
-		if (bit[i]) {
-			s = strPlusOne(s);
-		}
-	}
-
-	if (isNegative)
-		cout << '-';
 	cout << s;
-
 }
 
 QInt QInt::operator&(const QInt& qint)
@@ -261,7 +266,6 @@ QInt& QInt::operator~()
 	}
 	return *this;
 }
-
 QInt QInt::operator>>(const int& number)
 {
 	QInt result;
@@ -299,6 +303,7 @@ QInt QInt::operator<<(const int& number)
 
 }
 
+
 QInt& QInt::RoL(int n)
 {
 	for (int i = 0; i < n; i++)
@@ -331,13 +336,15 @@ QInt QInt::operator+(QInt& q)
 {
 	QInt res;
 	int nho = 0;
-	int bitRes = 0;
+	int bitRes = 0,temp1,temp2;
 	for (int i = 0; i < 128; i++)
 	{
-		bitRes = (*this >> i).data[3] & 1 + (q >> i).data[3] & 1 + nho;
+		temp1 = (*this >> i).data[3] & 1;
+		temp2 = (q >> i).data[3] & 1;
+		bitRes = temp1 + temp2 + nho;
 		if (bitRes == 1)
 		{
-			res.data[(127 - i) / 32] = res.data[(127 - i) / 32] | (1 << ((127 - i) % 32));
+			res.data[(127 - i) / 32] = res.data[(127 - i) / 32] | (1 << (i % 32));
 			nho = 0;
 		}
 		else if (bitRes == 2)
@@ -346,22 +353,20 @@ QInt QInt::operator+(QInt& q)
 		}
 		else if (bitRes == 3)
 		{
-			res.data[(127 - i) / 32] = res.data[(127 - i) / 32] | (1 << ((127 - i) % 32));
+			res.data[(127 - i) / 32] = res.data[(127 - i) / 32] | (1 << (i % 32));
 			nho = 1;
 		}
 	}
 	return res;
 }
 
-QInt QInt::operator-(QInt&q)
+QInt QInt::operator-(QInt& q)
 {
 	QInttoTwoComplement(q);
-	QInt result;
-	result = *this + q;
-	return result;
+	return(*this + q);
 }
 
-QInt QInt::operator*(QInt&q)
+QInt QInt::operator*(QInt& q)
 {
 	bool negative = false;
 	if ((this->negative() && !q.negative()) || (!this->negative() && q.negative()))
@@ -391,11 +396,11 @@ QInt QInt::operator*(QInt&q)
 	return result;
 }
 
-QInt QInt::operator/(QInt&q)
+QInt QInt::operator/(QInt& q)
 {
 	QInt temp;
 	QInt p(1);
-	if (this->zero() ||q.zero())return temp;
+	if (this->zero() || q.zero())return temp;
 	int k = 128;
 	bool negative = false;
 	if ((this->negative() && !q.negative()) || (!this->negative() && q.negative()))
@@ -430,7 +435,7 @@ QInt QInt::operator/(QInt&q)
 	return result;
 }
 
-bool QInt::operator>(QInt&q)
+bool QInt::operator>(QInt& q)
 {
 	if ((this->negative()) && (!q.negative()))
 	{
@@ -457,7 +462,7 @@ bool QInt::operator>(QInt&q)
 	return false;
 }
 
-bool QInt::operator<(QInt&q)
+bool QInt::operator<(QInt& q)
 {
 	if ((this->negative()) && (!q.negative()))
 	{
@@ -484,25 +489,25 @@ bool QInt::operator<(QInt&q)
 	return false;
 }
 
-bool QInt::operator==(QInt&q)
+bool QInt::operator==(QInt& q)
 {
 	if ((*this > q) || (*this < q))return false;
 	return true;
 }
 
-bool QInt::operator<=(QInt&q)
+bool QInt::operator<=(QInt& q)
 {
 	if ((*this < q) || (*this == q))return true;
 	return false;
 }
 
-bool QInt::operator>=(QInt&q)
+bool QInt::operator>=(QInt& q)
 {
 	if ((*this > q) || (*this == q))return true;
 	return false;
 }
 
-QInt QInt::operator=(const QInt&q)
+QInt QInt::operator=(const QInt& q)
 {
 	if (this != &q)
 	{
@@ -514,17 +519,11 @@ QInt QInt::operator=(const QInt&q)
 	return *this;
 }
 
-QInt QInt::QInttoTwoComplement(QInt x)
-{
-	QInt q(1);
-	x = ~x + q;
-	return (x);
-}
 
 bool QInt::negative()
 {
-	if ((*this>>127).data[3]==1)
-	return true;
+	if ((*this >> 127).data[3] == 1)
+		return true;
 	return false;
 }
 
@@ -535,4 +534,11 @@ bool QInt::zero()
 		if (this->data[i] != 0)return false;
 	}
 	return true;
+}
+
+QInt QInttoTwoComplement(QInt&x)
+{
+	QInt q(1);
+	x = ~x + q;
+	return (x);
 }

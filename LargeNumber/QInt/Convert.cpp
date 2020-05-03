@@ -32,6 +32,8 @@ QInt BinToDec(bool* bit)
 	return res;
 }
 
+
+
 //Hàm chuyển đổi chuỗi thập phân thành chuỗi thập lục phân (DEC -> HEX)
 string DectoHex(string decStr)
 {
@@ -162,6 +164,11 @@ string BintoHex(string strbin)
 string HexToBin(string hexstr)
 {
 	string binstr;
+	if (hexstr.size() > 32)
+	{
+		cout << "The size of this hexa number is over 128." << endl;
+		return "";
+	}
 	for (int i = 0; i < hexstr.size(); i++)
 	{
 		if (hexstr[i] == '0') binstr = binstr + "0000";//0
@@ -256,6 +263,110 @@ string BoolToString(bool* bin)
 	return result;
 }
 
+//Hàm chuyển mảng string bit thành bool bit
+bool* StringToBool(string bin)
+{
+	bool* bin_res = new bool[128];
+	while (bin.size()!=128)
+	{
+		bin.insert(bin.begin(), '0');
+	}
+	for (int i = 0; i < 128; i++)
+	{
+		bin_res[i] = bin[i] - '0';
+	}
+	return bin_res;
+}
 
+//Hàm cộng 2 số thập lục phân
+string hexaAdd(string hex1, string hex2)
+{
+	bool sub = false;
+	if (hex2[0] == '-')
+	{
+		sub = true;
+		hex2.erase(0, 1);//bỏ dấu '-' ra khỏi chuỗi
+	}
+	//chuyển 2 số Hexa cần tính thành chuỗi nhị phân
+	string binstr1 = HexToBin(hex1);
+	string binstr2 = HexToBin(hex2);
+	//biến chuỗi nhị phân thành mảng nhị phân
+	bool* bin1 = StringToBool(binstr1);
+	bool* bin2 = NULL;
+	if (sub)//nếu là số âm thì chuyển về dạng bù 2
+	{
+		bin2 = StringToBool(binstr2);
+		bin2 = twoComlement(bin2);
+	}
+	else
+	{
+		bin2 = StringToBool(binstr2);
+	}
+	//chuyển mảng nhị phân thành QInt
+	QInt qint1,qint2,result;
+	qint1 = BinToDec(bin1);
+	qint2 = BinToDec(bin2);
+	
+	//tiến hành cộng 2 số
+	result = qint1 + qint2;
 
+	//chuyển Qint thàng mảng bool bit
+	bool* resbin = DecToBin(result);
 
+	//chuyển mảng bool bit thành string bit -->chuyển string bit thành string Hexa
+	return BintoHex(BoolToString(resbin));
+}
+
+TypeConvert identifyConvert(string s1, string s2)
+{
+	if (s1 == "2")
+	{
+		if (s2 == "10") return Bin2Dec;
+		if (s2 == "16") return Bin2Hex;
+	}
+	else
+	{
+		if (s1 == "10")
+		{
+			if (s2 == "2") return Dec2Bin;
+			if (s2 == "16") return Dec2Hex;
+		}
+		else
+		{
+			if (s2 == "2") return Hex2Bin;
+			if (s2 == "10") return Hex2Dec;
+		}
+	}
+}
+
+void convertRun(string t1, string t2, string num)
+{
+	TypeConvert type = identifyConvert(t1, t2);
+	QInt res;
+	switch (type)
+	{
+	case Dec2Bin:
+
+		break;
+	case Bin2Dec:
+	{
+		bool* bit = StringToBool(num);
+		res = BinToDec(bit);
+		
+	}break;
+	case Hex2Bin:
+	{
+		string bit = HexToBin(num);
+		
+	}break;
+	case Bin2Hex:
+		break;
+	case Hex2Dec:
+		break;
+	case Dec2Hex:
+		break;
+	default:
+		break;
+	}
+	res.printQInt();
+}

@@ -10,8 +10,9 @@ public:
 	int data[4];
 
 	QInt();
-	QInt(QInt& q);
+	QInt(const QInt& q);
 	QInt(int q);
+	QInt(string bin);
 	~QInt();
 
 	//Hàm nhập từ console
@@ -56,7 +57,14 @@ public:
 	//Toan tu =
 	QInt operator =(const QInt&);
 	//Hàm chuyển sang bù 2
-	QInt QInttoTwoComplement(QInt x);
+	
 	bool negative();
 	bool zero();
+
 };
+//
+QInt QInttoTwoComplement(QInt& x);
+bool* twoComlement(bool* bit);
+string strMultiTwo(string s);
+string strPlusOne(string s);
+string BinToDecStr(bool* bit);
