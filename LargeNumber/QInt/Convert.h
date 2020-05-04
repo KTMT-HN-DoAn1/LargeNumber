@@ -25,6 +25,11 @@ string HexToBin(string hexstr);
 //Hàm chuyển QInt thập phân sang thập lục phân
 string DecToHex(QInt x);
 
+//Hàm chuyển chuỗi số thập phân thành dãy nhị phân
+bool* StrToBin(string decStr);
+//Hàm chuyển dãy nhị phân thành chuỗi số thập phân
+string BinToStr(bool* bit);
+
 //-----------------------------------------------------------MỘT SỐ HÀM HỖ TRỢ------------------------------------------------------------------//
 
 //Chuyển đơn vị 10 ->16

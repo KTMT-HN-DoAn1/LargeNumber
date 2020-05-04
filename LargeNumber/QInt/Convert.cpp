@@ -200,6 +200,200 @@ string DecToHex(QInt x)
 	return string(BintoHex(BoolToString(DecToBin(x))));
 }
 
+//Trả về chuỗi kết quả khi chia 1 chuỗi số thập phân cho 2
+string strDivTwo(string s)
+{
+	int add, next_add = 0;
+	for (int i = 0; i < s.length(); ++i) {
+		int tmp = s[i] - '0';
+		add = next_add;
+		if (tmp % 2 == 0) {
+			next_add = 0;
+		}
+		else {
+			next_add = 5;
+		}
+
+		char res = '0' + (add + (tmp / 2));
+		s[i] = res;
+	}
+
+	while (s[0] == '0' && s.length() > 1)
+	{
+		s.erase(0, 1);
+	}
+
+	return s;
+}
+
+//Tìm số bù 2 của 1 dãy 128bits
+bool* twoComlement(bool* bit)
+{
+	//
+	bit[0] = bit[0] ^ 1;
+
+	int flag = -1;
+	for (int i = 127; i > 0; --i) {
+		if (bit[i]) {
+			flag = i;
+			break;
+		}
+	}
+
+	for (int i = flag - 1; i > 0; --i) {
+		bit[i] = bit[i] ^ 1;
+	}
+
+	return bit;
+}
+
+//Hàm chuyển chuỗi số thập phân thành dãy nhị phân.
+bool* StrToBin(string decStr)
+{
+	// Mảng chứa 128bits.
+	bool* bit = new bool[128];
+	for (int i = 0; i < 128; i++)
+	{
+		bit[i] = 0;
+	}
+
+	//Kiểm tra số âm.
+	bool isNegative = false;
+	if (decStr[0] == '-')
+	{
+		isNegative = true;
+		decStr.erase(0, 1);
+	}
+
+	//Đưa chuỗi số về dạng tối giản (không dư số 0 đằng trước).
+	while (decStr[0] == '0')
+	{
+		decStr.erase(0, 1);
+	}
+
+	//Thực hiện chuyển chuỗi số thập phân về dạng bit.
+	//Chia 2 liên tục cho tới khi có được dãy bit.
+	int count = 0;
+	while (decStr[0] != '0')
+	{
+		//Kiểm tra chuỗi số hiện tại có chia hết cho 2 hay không?
+		int tmp = decStr[decStr.length() - 1] - '0';
+		//Nếu chia hết thì lưu 0, dư thì lưu 1.
+		if (tmp % 2 != 0) {
+			bit[127 - count] = 1;
+		}
+
+		//Tìm phần nguyên của dãy số khi chia cho 2.
+		decStr = strDivTwo(decStr);
+		count++;
+	}
+
+	//Nếu là số âm thì ta tìm bù 2 của dãy số hiện tại.
+	if (isNegative) {
+		bit = twoComlement(bit);
+	}
+
+	return bit;
+}
+
+//Hàm nhân chuỗi thập phân cho 2.
+string strMultiTwo(string s)
+{
+	int add = 0;
+	for (int i = s.length() - 1; i >= 0; --i) {
+		int tmp = s[i] - '0';
+		int calc = tmp * 2 + add;
+		if (calc >= 10) {
+			add = 1;
+		}
+		else {
+			add = 0;
+		}
+
+		char res = '0' + (calc % 10);
+		s[i] = res;
+
+		if (add == 1 && i == 0) {
+			s.insert(0, "1");
+		}
+	}
+
+	return s;
+}
+
+//Hàm cộng chuỗi thập phân cho 1.
+string strPlusOne(string s)
+{
+	int add = 1;
+
+	for (int i = s.length() - 1; i >= 0; --i) {
+		int tmp = s[i] - '0';
+		int calc = tmp + add;
+		if (calc >= 10) {
+			add = 1;
+		}
+		else {
+			add = 0;
+		}
+
+		char res = '0' + (calc % 10);
+		s[i] = res;
+
+		if (add == 0) {
+			return s;
+		}
+
+		if (add == 1 && i == 0) {
+			s.insert('1', 0);
+		}
+	}
+
+	return s;
+}
+
+
+//Hàm chuyển dãy nhị phân thành chuỗi số thập phân.
+string BinToStr(bool* bit)
+{
+	//Kiểm tra âm, nếu âm thì chuyển về dạng bù 2 (dương).
+	bool isNegative = false;
+	if (bit[0])
+	{
+		isNegative = true;
+		bit = twoComlement(bit);
+	}
+
+	string s = "0";
+
+	//Tìm vị trí bắt đầu của dãy bits (số 1 đầu tiên).
+	int index = 0;
+	for (int i = 0; i < 128; ++i)
+	{
+		if (bit[i]) {
+			index = i;
+			break;
+		}
+	}
+
+	//Tìm số thập phân tương ứng với dãy bits.
+	//Với mỗi bit trong dãy, ta nhân 2, nếu là 1 thì cộng thêm 1 (do khi chia dư ra).
+	for (int i = index; i < 128; ++i)
+	{
+		s = strMultiTwo(s);
+		if (bit[i]) {
+			s = strPlusOne(s);
+		}
+	}
+
+	//Nếu là số âm, thêm dấu '-' phía trước chuỗi.
+	if (isNegative)
+	{
+		s.insert(s.begin(), '-');
+	}
+
+	return s;
+}
+
 //-----------------------CÁC HÀM HỖ TRỢ-------------------------------------------------//
 //Chuyển đơn vị 10 ->16
 char DecHex(int a)
