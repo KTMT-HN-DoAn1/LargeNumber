@@ -18,43 +18,85 @@ void Color(int colour)
 	SetConsoleTextAttribute(color, colour);
 }
 
+void printFrame()
+{
+	Color(14);
+	int x = startFrameX;
+	int y = startFrameY;
+	gotoXY(x, y);
+	cout << "================================================================" << endl;
+	gotoXY(x, y + 1);
+	cout << "|                       MY CALCULATOR                          |" << endl;
+	gotoXY(x, y + 2);
+	cout << "================================================================" << endl;
+
+	for (int i = 0; i <= heightMenu; ++i)
+	{
+		gotoXY(x, startMenuY + i);
+		cout << "|                                                              |" << endl;
+	}
+	gotoXY(x, startMenuY + heightMenu + 1);
+	cout << "================================================================" << endl;
+}
+
 int printMainMenu()
 {
 	int lenh;
 	Color(14);
-	gotoXY(30, 10);
-	cout << "================================================================" << endl;
-	gotoXY(30, 11);
-	cout << "|                       MY CALCULATOR                          |" << endl;
-	gotoXY(30, 12);
-	cout << "================================================================" << endl;
-	gotoXY(30, 13);
+	
+	gotoXY(startFrameX, startMenuY);
 	cout << "|           1. QINT                                            |" << endl;
-	gotoXY(30, 14);
+	gotoXY(startFrameX, startMenuY + 1);
 	cout << "|           2. QFLOAT                                          |" << endl;
-	gotoXY(30, 15);
+	gotoXY(startFrameX, startMenuY + 2);
 	cout << "|                                YOUR CHOICE: [ ]              |" << endl;
-	gotoXY(30, 16);
-	cout << "================================================================" << endl;
-	gotoXY(77,15);
+	gotoXY(77, startMenuY + 2);
 	cin >> lenh;
 	return lenh;
 }
 
+void printModeFrame()
+{
+	printFrame();
+	gotoXY(startMenuX + 2, startMenuY);
+	cout << "1. Arithmetic: " << endl;
+	gotoXY(startMenuX + 2, startMenuY + 1);
+	cout << "2. Convertion: " << endl;
+	gotoXY(startMenuX + 2, startMenuY + 2);
+	cout << "Your Input: " << endl;
+	int choice;
+	gotoXY(startMenuX + 2 + 13, startMenuY + 3);
+	cin >> choice;
+
+	if (choice == 1)
+	{
+
+	}
+	else {
+		printConvertFrame();
+	}
+}
+
 void printConvertFrame()
 {
-	gotoXY(30, 10);
-	cout << "================================================================" << endl;
-	gotoXY(30, 11);
-	cout << "|                       MY CALCULATOR                          |" << endl;
-	gotoXY(30, 12);
-	cout << "================================================================" << endl;
-	gotoXY(3, 13);
+	printFrame();
+	gotoXY(startMenuX + 2, startMenuY);
+	cout << "Chosse your input state: " << endl;
+	gotoXY(startMenuX + 2, startMenuY + 1);
 	cout << "1. DEC: " << endl;
-	gotoXY(3, 14);
+	gotoXY(startMenuX + 2, startMenuY + 2);
 	cout << "2. BIN: " << endl;
-	gotoXY(3, 15);
-	cout << "1. HEX: " << endl;
-	gotoXY(3, 16);
+	gotoXY(startMenuX + 2, startMenuY + 3);
+	cout << "3. HEX: " << endl;
+	gotoXY(startMenuX + 2, startMenuY + 4);
 	cout << "Your Input: " << endl;
+	int choice;
+	gotoXY(startMenuX + 2 + 13, startMenuY + 5);
+	cin >> choice;
+
+}
+
+void inputQInt()
+{
+
 }

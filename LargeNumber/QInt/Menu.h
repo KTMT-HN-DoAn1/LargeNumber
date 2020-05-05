@@ -24,14 +24,26 @@
 
 #define default_ColorCode		7
 
+#define startFrameX 30
+#define startFrameY 8
+#define startMenuX 30
+#define startMenuY 11
+#define heightMenu 10
+
 //Hàm di chuyển đến điểm có tọa độ x,y treenmanf hình console
 void gotoXY(int x, int y);
 
 // hàm thay đổi màu sắc chữ
 void Color(int colour);
 
+//Frame
+void printFrame();
+
 //Main Menu
 int printMainMenu();
+
+//Khung làm việc chọn chế độ
+void printModeFrame();
 
 //Khung màn làm việc chuyển đổi giữa các hệ
 void printConvertFrame();
