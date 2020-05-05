@@ -394,6 +394,23 @@ string BinToStr(bool* bit)
 	return s;
 }
 
+bool* BinStrToBin(string s)
+{
+	bool* bit = new bool[128];
+	for (int i = 0; i < 128; i++)
+	{
+		bit[i] = 0;
+	}
+
+	for (int i = 0; i < s.length(); ++i)
+	{
+		if (s[s.length() - 1 - i] == '1')
+			bit[127 - i] = true;
+	}
+
+	return bit;
+}
+
 //-----------------------CÁC HÀM HỖ TRỢ-------------------------------------------------//
 //Chuyển đơn vị 10 ->16
 char DecHex(int a)
@@ -562,5 +579,5 @@ void convertRun(string t1, string t2, string num)
 	default:
 		break;
 	}
-	res.printQInt();
+	//res.printQInt();
 }

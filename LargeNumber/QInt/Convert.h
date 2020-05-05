@@ -30,6 +30,9 @@ bool* StrToBin(string decStr);
 //Hàm chuyển dãy nhị phân thành chuỗi số thập phân
 string BinToStr(bool* bit);
 
+//Hàm chuyển chuỗi nhị phân sang mảng bits
+bool* BinStrToBin(string s);
+
 //-----------------------------------------------------------MỘT SỐ HÀM HỖ TRỢ------------------------------------------------------------------//
 
 //Chuyển đơn vị 10 ->16

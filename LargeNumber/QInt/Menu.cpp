@@ -77,6 +77,72 @@ void printModeFrame()
 	}
 }
 
+string overLoadInput() {
+	char c;
+	string bits;
+	int count = 0;
+	while (c = _getch()) {
+
+		_getch();
+		if (c == '\r') break;
+		if (c == '\b') {
+			if (count <= 0) continue;
+			printf("\b \b");
+			count--;
+			continue;
+		}
+		if (c == '1')
+			cout << '1';
+		if (c == '0')
+			cout << '0';
+		if (count % 4 == 0 && count != 0)
+			cout << " ";
+
+		if (count == 24)
+			gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+		if (count == 23)
+			gotoXY(startMenuX + 63, startMenuY + 2);
+
+		bits.push_back(c);
+		count++;
+	}
+	cout << endl;
+	return bits;
+}
+
+void printQIntConvertResult(int choice, string s)
+{
+	switch (choice)
+	{
+	case 1:
+		gotoXY(startMenuX + 2, startMenuY + 2);
+		cout << "2. BIN: ";
+
+		gotoXY(startMenuX + 2, startMenuY + 5);
+		cout << "3. HEX: ";
+		break;
+	case 2:
+		gotoXY(startMenuX + 2, startMenuY + 1);
+		cout << "1. DEC: " << endl;
+
+		gotoXY(startMenuX + 2, startMenuY + 5);
+		cout << "3. HEX: " << endl;
+		break;
+	case 3:
+		gotoXY(startMenuX + 2, startMenuY + 1);
+		cout << "1. DEC: " << endl;
+		gotoXY(startMenuX + 2, startMenuY + 2);
+		cout << "2. BIN: " << endl;
+		break;
+	}
+	gotoXY(startMenuX + 2, startMenuY + 1);
+	cout << "1. DEC: " << endl;
+	gotoXY(startMenuX + 2, startMenuY + 2);
+	cout << "2. BIN: " << endl;
+	gotoXY(startMenuX + 2, startMenuY + 3);
+	cout << "3. HEX: " << endl;
+}
+
 void printConvertFrame()
 {
 	printFrame();
@@ -86,14 +152,35 @@ void printConvertFrame()
 	cout << "1. DEC: " << endl;
 	gotoXY(startMenuX + 2, startMenuY + 2);
 	cout << "2. BIN: " << endl;
-	gotoXY(startMenuX + 2, startMenuY + 3);
+	gotoXY(startMenuX + 2, startMenuY + 5);
 	cout << "3. HEX: " << endl;
-	gotoXY(startMenuX + 2, startMenuY + 4);
+	gotoXY(startMenuX + 2, startMenuY + 6);
 	cout << "Your Input: " << endl;
 	int choice;
 	gotoXY(startMenuX + 2 + 13, startMenuY + 5);
 	cin >> choice;
 
+	string s;
+	switch (choice)
+	{
+	case 1:
+		gotoXY(startMenuX + 2 + 8, startMenuY + 1);
+		cin >> s;
+		
+		break;
+	case 2:
+		gotoXY(startMenuX + 2 + 8, startMenuY + 2);
+		s = overLoadInput();
+
+		break;
+	case 3:
+		gotoXY(startMenuX + 2 + 8, startMenuY + 5);
+		cin >> s;
+
+		break;
+	}
+
+	printQIntConvertResult(choice, s);
 }
 
 void inputQInt()

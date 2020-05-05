@@ -27,42 +27,66 @@ QInt::~QInt()
 }
 
 
-void QInt::scanQInt()
+void QInt::scanQInt(int choice, string s)
 {
-	string s;
-	cin >> s;
-
-	bool* bit = StrToBin(s);
-
-	for (int i = 0; i < 128; i++)
+	bool* bit = NULL;
+	switch (choice)
 	{
-		if (bit[i] == 1)
-		{
-			this->data[i / 32] = this->data[i / 32] | (1 << (31 - i % 32));
-		}
-	}
+	case 2:
+		bit = BinStrToBin(s);
+		*this = BinToDec(bit);
 
-	delete[]bit;
+		delete[]bit;
+		break;
+
+	case 10:
+		bit = StrToBin(s);
+		*this = BinToDec(bit);
+
+		delete[]bit;
+
+		break;
+
+	case 16:
+		string binStr = HexToBin(s);
+		bit = BinStrToBin(s);
+		*this = BinToDec(bit);
+		delete[]bit;
+		break;
+	}
+	
 }
 
-void QInt::printQInt()
+//Hàm in số QInt với outChoice là các định dạng in.
+void QInt::printQInt(int outChoice)
 {
-	
-	// Mảng chứa 128bits
 	bool* bit = new bool[128];
 	for (int i = 0; i < 128; i++)
 	{
 		bit[i] = 0;
 	}
 
-	for (int i = 0; i < 128; i++)
+	switch (outChoice)
 	{
-		bit[i] = (this->data[i / 32] >> (31 - i % 32) & 1);
+	case 2:
+		bit = DecToBin(*this);
+		
+		break;
+
+	case 10:
+		bit = DecToBin(*this);
+
+		cout << BinToStr(bit);
+
+		break;
+
+	case 16:
+		string res = DecToHex(*this);
+		cout << res;
+		break;
 	}
 
-	string s = BinToStr(bit);
-
-	cout << s;
+	delete[]bit;
 }
 
 QInt QInt::operator&(const QInt& qint)
