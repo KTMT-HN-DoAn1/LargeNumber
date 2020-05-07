@@ -55,6 +55,7 @@ int printMainMenu()
 	return lenh;
 }
 
+//Lựa chọn chế độ tính toán.
 void printModeFrame()
 {
 	printFrame();
@@ -77,43 +78,66 @@ void printModeFrame()
 	}
 }
 
+//Hàm điều chỉnh chuỗi nhập cho số nhị phân (do tới 128 bits nên sẽ phải xuống dòng).
 string overLoadInput() {
+	//Kí tự nhập vô hiện tại.
 	char c;
+	//Chuỗi nhị phân cuối cùng.
 	string bits;
+	//Độ dài chuỗi.
 	int countCh = 0;
+	//Số bit trong chuỗi.
 	int countBit = 0;
+	//Hàng hiện tại.
 	int line = 0;
+
+	//Mỗi lần nhận 1 kí tự.
 	while (c = _getch()) {
 
-
+		//Kết thúc khi user nhập Enter.
 		if (c == '\r') break;
+
+		//Khi user nhập phím xóa:
 		if (c == '\b') {
+			//Bỏ qua nếu đã xóa hết chuỗi.
 			if (countCh <= 0) continue;
 
-			if (!(((countBit) % 4) == 0 && countBit != 0)) {
-				countBit--;
+			//Nếu đang ở vị trí sau dấu cách 1 bit thì xóa bit đó và dấu cách.
+			if (((countBit) % 4) == 1 && countBit != 1) {
+				printf("\b \b");
+				countCh--;
+				bits.resize(countCh);
 			}
-
+			countBit--;
 			countCh--;
 			bits.resize(countCh);
 
 			//Nhảy lên dòng trên nếu user xóa tới kí tự đầu dòng.
-			//Dòng 1.
-			if (countCh == 87 && line == 2) {
-				gotoXY(startMenuX + 58, startMenuY + 2 + 1);
+			//Dòng 2.
+			if (countCh == 108 && line == 2) {
+				gotoXY(startMenuX + 61, startMenuY + 2 + 1);
 				line = 1;
 			}
-			//Dòng 2.
-			if (countCh == 47 && line == 1) {
-				gotoXY(startMenuX + 58, startMenuY + 2);
+			//Dòng 1.
+			if (countCh == 49 && line == 1) {
+				gotoXY(startMenuX + 60, startMenuY + 2);
 				line = 0;
 			}
 			printf("\b \b");
 			continue;
 		}
 
+		//Nhập tối đa 128 bits.
 		if (countBit >= 128) continue;
 
+		//Kết thúc 1 cụm 4 thì thêm dấu cách.
+		if ( ((countBit) % 4) == 0 && countBit != 0) {
+			cout << " ";
+			bits.push_back(' ');
+			countCh++;
+		}
+
+		//Chỉ nhận 2 kí tự 1 và 0.
 		if (c == '1') {
 			cout << '1';
 			countBit++;
@@ -124,22 +148,18 @@ string overLoadInput() {
 		}
 		else
 			continue;
-
+		//Đẩy vào chuỗi.
 		bits.push_back(c);
-		if ( ((countBit) % 4) == 0 && countBit != 0) {
-			cout << " ";
-			bits.push_back(' ');
-			countCh++;
-		}
 		countCh++;
 
-		//Xuống dòng khi chạm biên
-		if (countCh == 48) {
+		//Xuống dòng khi chạm biên.
+		//Xuống dòng 1.
+		if (countCh == 50) {
 			gotoXY(startMenuX + 1, startMenuY + 2 + 1);
 			line = 1;
 		}		
-
-		if (countCh == 84) {
+		//Xuống dòng 2.
+		if (countCh == 110) {
 			gotoXY(startMenuX + 1, startMenuY + 2 + 2);
 			line = 2;
 		}
@@ -149,6 +169,7 @@ string overLoadInput() {
 	return bits;
 }
 
+//In ra bảng số đã được chuyển đổi, choice là lựa chọn hệ input, s là chuỗi số cần đổi.
 void printQIntConvertResult(int choice, string s)
 {
 	QInt q;
@@ -192,6 +213,7 @@ void printQIntConvertResult(int choice, string s)
 	_getch();
 }
 
+//In menu lựa chọn hệ cần chuyển đổi.
 void printConvertFrame()
 {
 	printFrame();
@@ -210,6 +232,8 @@ void printConvertFrame()
 	cin >> choice;
 
 	string s;
+
+	//Khi chọn 1 hệ nào đó, con trỏ sẽ nhảy lên dòng của hệ đó.
 	switch (choice)
 	{
 	case 1:
@@ -230,9 +254,4 @@ void printConvertFrame()
 	}
 
 	printQIntConvertResult(choice, s);
-}
-
-void inputQInt()
-{
-
 }

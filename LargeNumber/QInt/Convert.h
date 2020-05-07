@@ -33,6 +33,8 @@ string BinToStr(bool* bit);
 //Hàm chuyển chuỗi nhị phân sang mảng bits
 bool* BinStrToBin(string s);
 
+//Chuẩn hóa chuỗi hex.
+string preparationHexStr(string s);
 //-----------------------------------------------------------MỘT SỐ HÀM HỖ TRỢ------------------------------------------------------------------//
 
 //Chuyển đơn vị 10 ->16

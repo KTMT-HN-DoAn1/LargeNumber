@@ -394,6 +394,7 @@ string BinToStr(bool* bit)
 	return s;
 }
 
+//Chuyển từ chuỗi nhị phân thành mảng nhị phân và chuẩn hóa nó.
 bool* BinStrToBin(string s)
 {
 	bool* bit = new bool[128];
@@ -415,6 +416,25 @@ bool* BinStrToBin(string s)
 	}
 
 	return bit;
+}
+
+//Chuẩn hóa chuỗi thập lục phân.
+string preparationHexStr(string s)
+{
+	string res;
+	res.resize(32);
+
+	for (int i = 0; i < 32; ++i)
+	{
+		res[i] = '0';
+	}
+
+	for (int i = s.length() - 1; i >= 0; --i)
+	{
+		res[32 - (s.length() - i)] = s[i];
+	}
+
+	return res;
 }
 
 //-----------------------CÁC HÀM HỖ TRỢ-------------------------------------------------//
