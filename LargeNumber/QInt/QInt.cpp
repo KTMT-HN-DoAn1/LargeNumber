@@ -27,42 +27,62 @@ QInt::~QInt()
 }
 
 
-void QInt::scanQInt()
+void QInt::scanQInt(int choice, string s)
 {
-	string s;
-	cin >> s;
-
-	bool* bit = StrToBin(s);
-
-	for (int i = 0; i < 128; i++)
+	bool* bit = NULL;
+	switch (choice)
 	{
-		if (bit[i] == 1)
-		{
-			this->data[i / 32] = this->data[i / 32] | (1 << (31 - i % 32));
-		}
+	case 2:
+		bit = StringToBool(s);
+		*this = BinToDec(bit);
+		delete[]bit;
+		break;
+
+	case 10:
+		bit = StrToBin(s);
+		*this = BinToDec(bit);
+		delete[]bit;
+		break;
+	case 16:
+		string binStr = HexToBin(s);
+		bit = StringToBool(binStr);
+		*this = BinToDec(bit);
+		delete[]bit;
+		break;
 	}
 
-	delete[]bit;
 }
 
-void QInt::printQInt()
+//Hàm in số QInt với outChoice là các định dạng in.
+void QInt::printQInt(int outChoice)
 {
-	
-	// Mảng chứa 128bits
 	bool* bit = new bool[128];
 	for (int i = 0; i < 128; i++)
 	{
 		bit[i] = 0;
 	}
 
-	for (int i = 0; i < 128; i++)
+	switch (outChoice)
 	{
-		bit[i] = (this->data[i / 32] >> (31 - i % 32) & 1);
+	case 2:
+		bit = DecToBin(*this);
+
+		break;
+
+	case 10:
+		bit = DecToBin(*this);
+
+		cout << BinToDecStr(bit);
+
+		break;
+
+	case 16:
+		string res = DecToHex(*this);
+		cout << res;
+		break;
 	}
 
-	string s = BinToStr(bit);
-
-	cout << s;
+	delete[]bit;
 }
 
 QInt QInt::operator&(const QInt& qint)
@@ -228,10 +248,6 @@ QInt QInt::operator+(QInt& q)
 	int bitRes = 0,temp1,temp2;
 	for (int i = 0; i < 128; i++)
 	{
-		if (i == 32)
-		{
-			i = 32;
-		}
  		temp1 = (*this >> i).data[3] & 1;
 		temp2 = (q >> i).data[3] & 1;
 		bitRes = temp1 + temp2 + nho;
@@ -262,7 +278,7 @@ QInt QInt::operator-(QInt& q)
 
 QInt QInt::operator*(QInt& q)
 {
-	bool negative = false;
+	/*bool negative = false;
 	if ((this->negative() && !q.negative()) || (!this->negative() && q.negative()))
 	{
 		negative = true;
@@ -274,19 +290,18 @@ QInt QInt::operator*(QInt& q)
 	if (q.negative())
 	{
 		QInttoTwoComplement(q);
-	}
+	}*/
 	QInt result;
 	QInt p(1);
 	while (!q.zero())
 	{
 		if (((q & p) - p).zero()) result = result + *this;
 		*this = *this << 1;
-		q = q >> 1;
 	}
-	if (negative)
+	/*if (negative)
 	{
 		QInttoTwoComplement(result);
-	}
+	}*/
 	return result;
 }
 

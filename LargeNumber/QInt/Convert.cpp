@@ -353,7 +353,7 @@ string strPlusOne(string s)
 
 
 //Hàm chuyển dãy nhị phân thành chuỗi số thập phân.
-string BinToStr(bool* bit)
+string BinToDecStr(bool* bit)
 {
 	//Kiểm tra âm, nếu âm thì chuyển về dạng bù 2 (dương).
 	bool isNegative = false;
@@ -392,6 +392,19 @@ string BinToStr(bool* bit)
 	}
 
 	return s;
+}
+
+int QIntToDec(QInt q)
+{
+	bool* bit = DecToBin(q);
+	string s = BinToDecStr(bit);
+	delete[]bit;
+	int res = 0;
+	for (int i = s.length()-1; i >= 0; i--)
+	{
+		res += (s[i] - '0') * pow(10, s.length() - 1 - i);
+	}
+	return res;
 }
 
 //-----------------------CÁC HÀM HỖ TRỢ-------------------------------------------------//
@@ -465,6 +478,7 @@ bool* StringToBool(string bin)
 	{
 		bin.insert(bin.begin(), '0');
 	}
+
 	for (int i = 0; i < 128; i++)
 	{
 		bin_res[i] = bin[i] - '0';
@@ -533,34 +547,62 @@ TypeConvert identifyConvert(string s1, string s2)
 	}
 }
 
-void convertRun(string t1, string t2, string num)
+string convertRun(string t1, string t2, string num)
 {
 	TypeConvert type = identifyConvert(t1, t2);
 	QInt res;
 	switch (type)
 	{
 	case Dec2Bin:
-
-		break;
+	{
+		res.scanQInt(10, num);
+		bool* bit = DecToBin(res);
+		return BoolToString(bit);
+	}break;
 	case Bin2Dec:
 	{
 		bool* bit = StringToBool(num);
-		res = BinToDec(bit);
-		
+		return BinToDecStr(bit);
 	}break;
 	case Hex2Bin:
 	{
-		string bit = HexToBin(num);
-		
+		return HexToBin(num);
 	}break;
 	case Bin2Hex:
+		return BintoHex(num);
 		break;
 	case Hex2Dec:
-		break;
+	{
+		res.scanQInt(16, num);
+		bool* bit = DecToBin(res);
+		return BinToDecStr(bit);
+	}break;
 	case Dec2Hex:
-		break;
+	{	
+		res.scanQInt(10, num);
+		return DecToHex(res);
+	}break;
 	default:
 		break;
 	}
-	res.printQInt();
+}
+
+
+//Hàm chuyển một số QInt sang tất cả các hệ và in ra màn hình theo định dạng
+void ConvertToAll(QInt& x)
+{
+	bool* bit = NULL;
+	bit = DecToBin(x);//chuyển QInt thành mảng bool bit
+
+	string binstr = BoolToString(bit);//chuyển mảng bool bit thành chuỗi bit
+	string hexstr = BintoHex(binstr);//chuyển chuỗi bit thành chuỗi Hexa
+	string decstr = BinToDecStr(bit);//chuyển mảng bool bit thành chuỗi thập phân
+	//Tiến hành in 3 kết quả đến 3 vị trí trên khung in sẵn
+	gotoXY(startMenuX+10, startMenuY + 1);
+	cout << decstr;
+	gotoXY(startMenuX + 10, startMenuY + 2);
+	cout << hexstr;
+	gotoXY(startMenuX + 10, startMenuY + 3);
+	//hàm in theo định dạng chuỗi nhị phân
+
 }

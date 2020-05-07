@@ -16,9 +16,11 @@ public:
 	~QInt();
 
 	//Hàm nhập từ console
-	void scanQInt();
+	void scanQInt(int choice, string s);
 	//Hàm xuất ra console
-	void printQInt();
+	void printQInt(int outChoice);
+
+
 
 	//Toán tử &.
 	QInt operator&(const QInt&);
@@ -70,5 +72,3 @@ bool* twoComlement(bool* bit);
 string strMultiTwo(string s);
 //Hàm tính chuỗi số cộng 1
 string strPlusOne(string s);
-//Hàm chuyển mảng bool bit sang chuỗi thập phân
-string BinToDecStr(bool* bit);
