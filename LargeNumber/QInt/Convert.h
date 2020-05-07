@@ -11,7 +11,7 @@ enum TypeConvert
 
 bool* DecToBin(QInt x);
 QInt BinToDec(bool* bit);
-
+string strDivTwo(string s);
 
 //Hàm chuyển đổi chuỗi thập phân thành chuỗi thập lục phân (DEC -> HEX)
 string DectoHex(string decStr);

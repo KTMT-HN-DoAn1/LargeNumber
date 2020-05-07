@@ -126,11 +126,13 @@
     <ClCompile Include="Convert.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="QFloat.cpp" />
     <ClCompile Include="QInt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Convert.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="QFloat.h" />
     <ClInclude Include="QInt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
