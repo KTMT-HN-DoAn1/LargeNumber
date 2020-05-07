@@ -394,6 +394,7 @@ string BinToDecStr(bool* bit)
 	return s;
 }
 
+
 int QIntToDec(QInt q)
 {
 	bool* bit = DecToBin(q);
@@ -403,6 +404,46 @@ int QIntToDec(QInt q)
 	for (int i = s.length()-1; i >= 0; i--)
 	{
 		res += (s[i] - '0') * pow(10, s.length() - 1 - i);
+	}
+
+//Chuyển từ chuỗi nhị phân thành mảng nhị phân và chuẩn hóa nó.
+bool* BinStrToBin(string s)
+{
+	bool* bit = new bool[128];
+	for (int i = 0; i < 128; i++)
+	{
+		bit[i] = 0;
+	}
+
+	for (int i = 0; i < s.length(); ++i)
+	{
+		if (s[i] == ' ')
+			s.erase(i, 1);
+	}
+
+	for (int i = 0; i < s.length(); ++i)
+	{
+		if (s[s.length() - 1 - i] == '1')
+			bit[127 - i] = true;
+	}
+
+	return bit;
+}
+
+//Chuẩn hóa chuỗi thập lục phân.
+string preparationHexStr(string s)
+{
+	string res;
+	res.resize(32);
+
+	for (int i = 0; i < 32; ++i)
+	{
+		res[i] = '0';
+	}
+
+	for (int i = s.length() - 1; i >= 0; --i)
+	{
+		res[32 - (s.length() - i)] = s[i];
 	}
 	return res;
 }
@@ -585,6 +626,7 @@ string convertRun(string t1, string t2, string num)
 	default:
 		break;
 	}
+
 }
 
 

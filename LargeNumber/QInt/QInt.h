@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <iostream>
 #include <string>
+#include <conio.h>
 
 using namespace std;
 
@@ -19,8 +20,6 @@ public:
 	void scanQInt(int choice, string s);
 	//Hàm xuất ra console
 	void printQInt(int outChoice);
-
-
 
 	//Toán tử &.
 	QInt operator&(const QInt&);

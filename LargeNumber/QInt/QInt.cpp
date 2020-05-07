@@ -1,5 +1,6 @@
 #include "QInt.h"
 #include "Convert.h"
+#include "Menu.h"
 
 QInt::QInt()
 {
@@ -26,12 +27,13 @@ QInt::~QInt()
 {
 }
 
-
+//Đọc số QInt dưới dạng chuỗi, với hệ choice (2, 10, 16).
 void QInt::scanQInt(int choice, string s)
 {
 	bool* bit = NULL;
 	switch (choice)
 	{
+
 	case 2:
 		bit = StringToBool(s);
 		*this = BinToDec(bit);
@@ -53,9 +55,10 @@ void QInt::scanQInt(int choice, string s)
 
 }
 
-//Hàm in số QInt với outChoice là các định dạng in.
+//Hàm in số QInt với hệ outChoice (2, 10, 16).
 void QInt::printQInt(int outChoice)
 {
+	//init mảng nhị phân.
 	bool* bit = new bool[128];
 	for (int i = 0; i < 128; i++)
 	{
@@ -64,18 +67,35 @@ void QInt::printQInt(int outChoice)
 
 	switch (outChoice)
 	{
-	case 2:
-		bit = DecToBin(*this);
-
-		break;
-
+  //Chuyển QInt thành mảng nhị phân và từ đó chuyển sang chuỗi thập phân.
 	case 10:
 		bit = DecToBin(*this);
-
 		cout << BinToDecStr(bit);
-
 		break;
 
+	//Chuyển QInt thành mảng nhị phân và in dưới dạng cụm 4 bits.
+	case 2:
+		bit = DecToBin(*this);
+		for (int i = 0; i < 128; ++i)
+		{
+			//Mỗi 4 bits là 1 cụm.
+			if ((i + 1) % 4 == 1 && i != 0)
+			{
+				cout << " ";
+			}
+			//Xuống dòng.
+			if (i == 40)
+				gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+			if (i == 88)
+				gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+
+			if (bit[i])
+				cout << "1";
+			else
+				cout << "0";
+		}
+		break;
+	//Chuyển thành chuỗi thập lục phân và in ra.
 	case 16:
 		string res = DecToHex(*this);
 		cout << res;

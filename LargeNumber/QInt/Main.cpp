@@ -9,6 +9,9 @@ int main(int argc, char* argv[])
 	f.open("QInt_input.txt");
 	g.open("QInt_output.txt");
 	while (!f.eof())
+	//khi không thực hiện bằng Command Prompt
+
+	if (argc == 1)
 	{
 		char c;
 		string s1, s2, s3, s4;
@@ -94,5 +97,5 @@ int main(int argc, char* argv[])
 	gotoXY(startFrameX, startMenuY + heightMenu + 5);
 	
 	return 0;
-	
+
 }
