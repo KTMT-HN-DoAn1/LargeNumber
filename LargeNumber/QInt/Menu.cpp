@@ -65,7 +65,7 @@ void printModeFrame()
 	gotoXY(startMenuX + 2, startMenuY + 2);
 	cout << "Your Input: " << endl;
 	int choice;
-	gotoXY(startMenuX + 2 + 13, startMenuY + 3);
+	gotoXY(startMenuX + 2 + 12, startMenuY + 2);
 	cin >> choice;
 
 	if (choice == 1)
@@ -80,67 +80,116 @@ void printModeFrame()
 string overLoadInput() {
 	char c;
 	string bits;
-	int count = 0;
+	int countCh = 0;
+	int countBit = 0;
+	int line = 0;
 	while (c = _getch()) {
 
-		_getch();
+
 		if (c == '\r') break;
 		if (c == '\b') {
-			if (count <= 0) continue;
+			if (countCh <= 0) continue;
+
+			if (!(((countBit) % 4) == 0 && countBit != 0)) {
+				countBit--;
+			}
+
+			countCh--;
+			bits.resize(countCh);
+
+			//Nhảy lên dòng trên nếu user xóa tới kí tự đầu dòng.
+			//Dòng 1.
+			if (countCh == 87 && line == 2) {
+				gotoXY(startMenuX + 58, startMenuY + 2 + 1);
+				line = 1;
+			}
+			//Dòng 2.
+			if (countCh == 47 && line == 1) {
+				gotoXY(startMenuX + 58, startMenuY + 2);
+				line = 0;
+			}
 			printf("\b \b");
-			count--;
 			continue;
 		}
-		if (c == '1')
-			cout << '1';
-		if (c == '0')
-			cout << '0';
-		if (count % 4 == 0 && count != 0)
-			cout << " ";
 
-		if (count == 24)
-			gotoXY(startMenuX + 1, startMenuY + 2 + 1);
-		if (count == 23)
-			gotoXY(startMenuX + 63, startMenuY + 2);
+		if (countBit >= 128) continue;
+
+		if (c == '1') {
+			cout << '1';
+			countBit++;
+		}
+		else if (c == '0') {
+			cout << '0';
+			countBit++;
+		}
+		else
+			continue;
 
 		bits.push_back(c);
-		count++;
+		if ( ((countBit) % 4) == 0 && countBit != 0) {
+			cout << " ";
+			bits.push_back(' ');
+			countCh++;
+		}
+		countCh++;
+
+		//Xuống dòng khi chạm biên
+		if (countCh == 48) {
+			gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+			line = 1;
+		}		
+
+		if (countCh == 84) {
+			gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+			line = 2;
+		}
+		
 	}
-	cout << endl;
+	//bits.resize(count);
 	return bits;
 }
 
 void printQIntConvertResult(int choice, string s)
 {
+	QInt q;
 	switch (choice)
 	{
 	case 1:
+		q.scanQInt(10, s);
+
 		gotoXY(startMenuX + 2, startMenuY + 2);
 		cout << "2. BIN: ";
+		q.printQInt(2);
 
 		gotoXY(startMenuX + 2, startMenuY + 5);
 		cout << "3. HEX: ";
+		q.printQInt(16);
 		break;
 	case 2:
+		q.scanQInt(2, s);
+
 		gotoXY(startMenuX + 2, startMenuY + 1);
-		cout << "1. DEC: " << endl;
+		cout << "1. DEC: ";
+		q.printQInt(10);
 
 		gotoXY(startMenuX + 2, startMenuY + 5);
-		cout << "3. HEX: " << endl;
+		cout << "3. HEX: ";
+		q.printQInt(16);
 		break;
 	case 3:
+		q.scanQInt(16, s);
+
 		gotoXY(startMenuX + 2, startMenuY + 1);
-		cout << "1. DEC: " << endl;
+		cout << "1. DEC: ";
+		q.printQInt(10);
+
 		gotoXY(startMenuX + 2, startMenuY + 2);
-		cout << "2. BIN: " << endl;
+		cout << "2. BIN: ";
+		q.printQInt(2);
 		break;
 	}
-	gotoXY(startMenuX + 2, startMenuY + 1);
-	cout << "1. DEC: " << endl;
-	gotoXY(startMenuX + 2, startMenuY + 2);
-	cout << "2. BIN: " << endl;
-	gotoXY(startMenuX + 2, startMenuY + 3);
-	cout << "3. HEX: " << endl;
+
+	_getch();
 }
 
 void printConvertFrame()
@@ -154,10 +203,10 @@ void printConvertFrame()
 	cout << "2. BIN: " << endl;
 	gotoXY(startMenuX + 2, startMenuY + 5);
 	cout << "3. HEX: " << endl;
-	gotoXY(startMenuX + 2, startMenuY + 6);
+	gotoXY(startMenuX + 2, startMenuY + 7);
 	cout << "Your Input: " << endl;
 	int choice;
-	gotoXY(startMenuX + 2 + 13, startMenuY + 5);
+	gotoXY(startMenuX + 2 + 12, startMenuY + 7);
 	cin >> choice;
 
 	string s;

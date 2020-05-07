@@ -1,5 +1,6 @@
 #include "QInt.h"
 #include "Convert.h"
+#include "Menu.h"
 
 QInt::QInt()
 {
@@ -70,7 +71,24 @@ void QInt::printQInt(int outChoice)
 	{
 	case 2:
 		bit = DecToBin(*this);
-		
+		for (int i = 0; i < 128; ++i)
+		{
+			if ((i + 1) % 4 == 1 && i != 0)
+			{
+				cout << " ";
+			}
+
+			if (i == 40)
+				gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+			if (i == 88)
+				gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+
+			if (bit[i])
+				cout << "1";
+			else
+				cout << "0";
+		}
+
 		break;
 
 	case 10:

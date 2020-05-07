@@ -5,7 +5,7 @@
 int main(int argc, char* argv[])
 {
 	//khi không thực hiện bằng Command Prompt
-	/*
+
 	if (argc == 1)
 	{
 		printFrame();
@@ -27,10 +27,12 @@ int main(int argc, char* argv[])
 
 	}
 	return 0;
+	/*
 	cout << hexaAdd("ABCDEF234", "-ABCDEF234") << endl;
-	*/
+	
 	QInt q;
 	q.scanQInt(10, "1000");
 	q.printQInt(16);
+	*/
 	system("pause");
 }
