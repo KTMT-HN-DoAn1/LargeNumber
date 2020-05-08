@@ -3,6 +3,10 @@
 #include<conio.h>
 #include"Header.h"
 
+#include "QFloat.h"
+
+
+
 int main(int argc, char* argv[])
 {
 	//khi không thực hiện bằng Command Prompt
@@ -47,8 +51,28 @@ int main(int argc, char* argv[])
 		}
 		
 	}
+
 	gotoXY(startFrameX, startMenuY + heightMenu + 5);
 	
-	return 0;
 
+	/*QInt q;
+	q.scanQInt(10, "1000");
+	q.printQInt(16);
+	while (1)
+	{
+
+		QFloat qf;
+		ScanQFloat(qf, cin);
+		bool* bit = new bool[128];
+		bit = FDecToBin(qf);
+
+		for (int i = 0; i < 128; i++)
+		{
+			if (i == 1 || i == 16)
+				cout << " ";
+			cout << bit[i];
+		}
+	}*/
+    
+		system("pause");
 }
