@@ -401,10 +401,12 @@ int QIntToDec(QInt q)
 	string s = BinToDecStr(bit);
 	delete[]bit;
 	int res = 0;
-	for (int i = s.length()-1; i >= 0; i--)
+	for (int i = s.length() - 1; i >= 0; i--)
 	{
 		res += (s[i] - '0') * pow(10, s.length() - 1 - i);
 	}
+	return res;
+}
 
 //Chuyển từ chuỗi nhị phân thành mảng nhị phân và chuẩn hóa nó.
 bool* BinStrToBin(string s)

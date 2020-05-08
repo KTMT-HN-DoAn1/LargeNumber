@@ -31,3 +31,6 @@ void funRunQIntArithmetic();
 //Hàm thao tác với QInt
 void funRunQInt();
 
+//Hàm xử lý các thao tác làm việc qua file
+void QIntFileProcessing(fstream& f, fstream& g);
+
