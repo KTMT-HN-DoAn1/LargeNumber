@@ -57,12 +57,10 @@ int main(int argc, char* argv[])
 
 	/*QInt q;
 	q.scanQInt(10, "1000");
-	q.printQInt(16);
-	while (1)
-	{
-
+	q.printQInt(16);*/
+	/*
 		QFloat qf;
-		ScanQFloat(qf, cin);
+		ScanBinQFloat(qf, cin);
 		bool* bit = new bool[128];
 		bit = FDecToBin(qf);
 
@@ -71,8 +69,8 @@ int main(int argc, char* argv[])
 			if (i == 1 || i == 16)
 				cout << " ";
 			cout << bit[i];
-		}
-	}*/
+		}*/
+
     
 		system("pause");
 }

@@ -15,7 +15,9 @@ public:
 int countPoint(string s);
 int checkNumber(string s);
 int checkInputQFloat(string s);
+
 void ScanQFloat(QFloat& x, istream& in);
+void ScanBinQFloat(QFloat& x, istream& in);
 QFloat FBinToDec(bool* bit);
 bool* FDecToBin(QFloat x);
 void plusOneBit(bool* bit);
