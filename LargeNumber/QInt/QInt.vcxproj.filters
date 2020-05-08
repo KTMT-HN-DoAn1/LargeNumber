@@ -27,6 +27,7 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Header.cpp">
     <ClCompile Include="QFloat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -41,6 +42,7 @@
     <ClInclude Include="Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header.h">
     <ClInclude Include="QFloat.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -1,7 +1,8 @@
 ﻿#ifndef _MENU_H_
 #define _MENU_H_
-
+#include<conio.h>
 #include"QInt.h"
+#include"Convert.h"
 #include<Windows.h>
 
 #define ColorCode_Back			0
@@ -43,10 +44,20 @@ void printFrame();
 int printMainMenu();
 
 //Khung làm việc chọn chế độ
-void printModeFrame();
+int printModeFrame();
 
 //Khung màn làm việc chuyển đổi giữa các hệ
 void printConvertFrame();
+
+//Khung in kết quả
+void printResultCovertFrame();
+
+string overLoadInput();
+
+void printQIntConvertResult(int choice, string s);
+
+//Hàm in số QInt kết quả ra Frame trên console
+void printQIntinFrame(QInt q);
 
 
 #endif // !_MENU_H_

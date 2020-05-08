@@ -2,6 +2,7 @@
 #define _CONVERT_H_
 
 #include "QInt.h"
+#include"Menu.h"
 
 enum TypeConvert
 {
@@ -28,7 +29,10 @@ string DecToHex(QInt x);
 //Hàm chuyển chuỗi số thập phân thành dãy nhị phân
 bool* StrToBin(string decStr);
 //Hàm chuyển dãy nhị phân thành chuỗi số thập phân
-string BinToStr(bool* bit);
+string BinToDecStr(bool* bit);
+
+//Hàm chuyển từ chuỗi thập phân thành số thập phân
+int QIntToDec(QInt q);
 
 //Hàm chuyển chuỗi nhị phân sang mảng bits
 bool* BinStrToBin(string s);
@@ -55,8 +59,14 @@ string hexaAdd(string hex1, string hex2);
 //Xác định loại chuyển đổi giữa các hệ
 TypeConvert identifyConvert(string s1, string s2);
 
-//
-void convertRun(string t1, string t2, string num);
+//Hàm chyển đổi giữ các hệ trả về chuỗi ký tự kết quả của hệ tương ứng
+string convertRun(string t1, string t2, string num);
+
+//Hàm chuyển một số QInt sang tất cả các hệ và in ra màn hình theo định dạng
+void ConvertToAll(QInt& x);
+
+//Hàm xử lỹ chung cho các chức năng với QFloat
+
 
 #endif // !_CONVERT_H_
 

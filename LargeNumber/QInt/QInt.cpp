@@ -33,33 +33,26 @@ void QInt::scanQInt(int choice, string s)
 	bool* bit = NULL;
 	switch (choice)
 	{
-	//Biển chuỗi nhị phân thành mảng nhị phân (chuẩn hóa), sau đó chuyển thành QInt.
-	case 2:
-		bit = BinStrToBin(s);
-		*this = BinToDec(bit);
 
+	case 2:
+		bit = StringToBool(s);
+		*this = BinToDec(bit);
 		delete[]bit;
 		break;
 
-	// Chuyển chuỗi thập phân thành mảng nhị phân, sau đó chuyển thành QInt.
 	case 10:
 		bit = StrToBin(s);
 		*this = BinToDec(bit);
-
 		delete[]bit;
-
 		break;
-
-	//Chuẩn hóa chuỗi hex nhập vào, chuyển thành nhị phân, sau đó thành QInt.
 	case 16:
-		s = preparationHexStr(s);
 		string binStr = HexToBin(s);
-		bit = BinStrToBin(binStr);
+		bit = StringToBool(binStr);
 		*this = BinToDec(bit);
 		delete[]bit;
 		break;
 	}
-	
+
 }
 
 //Hàm in số QInt với hệ outChoice (2, 10, 16).
@@ -74,6 +67,12 @@ void QInt::printQInt(int outChoice)
 
 	switch (outChoice)
 	{
+  //Chuyển QInt thành mảng nhị phân và từ đó chuyển sang chuỗi thập phân.
+	case 10:
+		bit = DecToBin(*this);
+		cout << BinToDecStr(bit);
+		break;
+
 	//Chuyển QInt thành mảng nhị phân và in dưới dạng cụm 4 bits.
 	case 2:
 		bit = DecToBin(*this);
@@ -84,7 +83,6 @@ void QInt::printQInt(int outChoice)
 			{
 				cout << " ";
 			}
-
 			//Xuống dòng.
 			if (i == 40)
 				gotoXY(startMenuX + 1, startMenuY + 2 + 1);
@@ -96,17 +94,7 @@ void QInt::printQInt(int outChoice)
 			else
 				cout << "0";
 		}
-
 		break;
-
-	//Chuyển QInt thành mảng nhị phân và từ đó chuyển sang chuỗi thập phân.
-	case 10:
-		bit = DecToBin(*this);
-
-		cout << BinToStr(bit);
-
-		break;
-
 	//Chuyển thành chuỗi thập lục phân và in ra.
 	case 16:
 		string res = DecToHex(*this);
@@ -280,10 +268,6 @@ QInt QInt::operator+(QInt& q)
 	int bitRes = 0,temp1,temp2;
 	for (int i = 0; i < 128; i++)
 	{
-		if (i == 32)
-		{
-			i = 32;
-		}
  		temp1 = (*this >> i).data[3] & 1;
 		temp2 = (q >> i).data[3] & 1;
 		bitRes = temp1 + temp2 + nho;
@@ -314,7 +298,7 @@ QInt QInt::operator-(QInt& q)
 
 QInt QInt::operator*(QInt& q)
 {
-	bool negative = false;
+	/*bool negative = false;
 	if ((this->negative() && !q.negative()) || (!this->negative() && q.negative()))
 	{
 		negative = true;
@@ -326,19 +310,18 @@ QInt QInt::operator*(QInt& q)
 	if (q.negative())
 	{
 		QInttoTwoComplement(q);
-	}
+	}*/
 	QInt result;
 	QInt p(1);
 	while (!q.zero())
 	{
 		if (((q & p) - p).zero()) result = result + *this;
 		*this = *this << 1;
-		q = q >> 1;
 	}
-	if (negative)
+	/*if (negative)
 	{
 		QInttoTwoComplement(result);
-	}
+	}*/
 	return result;
 }
 
