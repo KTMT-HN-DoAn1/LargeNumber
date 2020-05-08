@@ -14,7 +14,7 @@ QFloat::~QFloat()
 {
 }
 
-QFloat QFloat::BinToDec(bool* bit)
+QFloat FBinToDec(bool* bit)
 {
 	QFloat res;
 	for (int i = 0; i < 128; i++)
@@ -27,7 +27,7 @@ QFloat QFloat::BinToDec(bool* bit)
 	return res;
 }
 
-bool* QFloat::DecToBin(QFloat x)
+bool* FDecToBin(QFloat x)
 {
 	bool* res = new bool[128];
 	for (int i = 0; i < 128; i++)
@@ -41,13 +41,27 @@ bool* QFloat::DecToBin(QFloat x)
 	return res;
 }
 
-void QFloat::ABC(bool* bit, int a)
+void plusOneBit(bool* bit)
 {
-	for (int i = 1; i < 16; i++)
+	int nho = 1;
+	int tem;
+	for (int i = 127; i > 15; i--)
 	{
-		bit[16 - i] = (a >> (i - 1)) & 1;
+		tem = bit[i] + nho;
+		if (tem == 1)
+		{
+			bit[i] = 1;
+			nho = 0;
+			return;
+		}
+		else if (tem == 2)
+		{
+			bit[i] = 0;
+			nho = 1;
+		}
 	}
 }
+
 
 int countPoint(string s)
 {
@@ -82,4 +96,153 @@ int checkInputQFloat(string s)
 	if ((checkNumber(s) == 1) && (countPoint(s) == 1))
 		return 1;
 	return 0;
+}
+
+
+
+void ScanQFloat(QFloat& q, istream& in)
+{
+	string s;
+	in >> s;
+
+	// Mảng chứa 128bits
+	bool* bit = new bool[128];
+	for (int i = 0; i < 128; i++)
+	{
+		bit[i] = 0;
+	}
+
+	bool isNegative = false;
+	if (s[0] == '-')
+	{
+		isNegative = true;
+		s.erase(0, 1);
+	}
+
+	//
+	while (s[0] == '0' && s[1] != '.')
+	{
+		s.erase(0, 1);
+	}
+
+	//chuoi toan so 0
+	if (s == "")
+	{
+		//q = "0";
+		return;
+	}
+
+	//tach thanh phan nguyen va phan thap phan
+	string strNguyen = "";
+	string strTPhan = "";
+	int pos = s.find('.');
+	strNguyen = s.substr(0, pos);
+	strTPhan = s.substr(pos + 1);
+
+	int exponent = -1;
+
+
+	//chuyen phan nguyen thanh nhi phan
+
+	int count = 0;
+	while (strNguyen[0] != '0')
+	{
+		if (count > 127) break;
+		int tmp = strNguyen[strNguyen.length() - 1] - '0';
+
+		if (tmp % 2 != 0) {
+			bit[127 - count] = 1;
+		}
+
+		strNguyen = strDivTwo(strNguyen);
+		count++;
+	}
+
+	//so mu bang so chu so phan nguyen - 1
+	if (count > 0)
+		exponent = count - 1;
+
+	//doi ve dau day bit
+	int k = 16; //vi tri bit dau tien phan fraction
+
+	for (int i = 128 - count; i < 128; i++)
+	{
+		swap(bit[k++], bit[i]);
+		if (k > 127)
+			break;
+	}
+
+
+	//chuyen phan thap phan thanh nhi phan
+	bool ignore = !bool(count);
+	strTPhan.insert(0, "0");
+	while (strTPhan.length() > 1)
+	{
+		strTPhan = strMultiTwo(strTPhan);
+		if (k > 127)
+		{
+			plusOneBit(bit);
+			break;
+		}
+		if (strTPhan[0] == '1')
+		{
+			strTPhan[0] = '0';
+			if (ignore)
+			{
+				count++;
+				ignore = false;
+				continue;
+			}
+			bit[k++] = 1;
+		}
+		else
+		{
+			if (ignore)
+			{
+				count++;
+			}
+			else
+			{
+				bit[k++] = 0;
+			}
+		}
+		while (strTPhan.length() > 0 && strTPhan[strTPhan.length() - 1] == '0')
+		{
+			strTPhan.erase(strTPhan.length() - 1, 1);
+		}
+	}
+
+	//so mu truong hop dich phai
+	if (exponent < 0)
+	{
+		exponent = -count;
+	}
+
+	//so mu qua 2^14-1
+	exponent += 16383;
+	for (int i = 1; i < 16; i++)
+	{
+		bit[16 - i] = (exponent >> (i - 1)) & 1;
+	}
+
+
+	if (isNegative) {
+		bit[0] = 1;
+	}
+
+	//ghi bit[] vao QFloat
+	for (int i = 0; i < 4; i++)
+	{
+		q.data[i] = 0;
+	}
+
+	for (int i = 0; i < 128; i++)
+	{
+		if (bit[i] == 1)
+		{
+			q.data[i / 32] = q.data[i / 32] | (1 << (31 - i % 32));
+		}
+	}
+
+	delete[]bit;
 }
