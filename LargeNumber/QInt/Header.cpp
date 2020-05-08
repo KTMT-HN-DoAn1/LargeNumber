@@ -226,11 +226,7 @@ void funRunQInt()
 		break;
 		case 2://các thao tác với chuyển dổi số giữa các hệ
 		{
-			string s;
-			cin >> s;
-			qint.scanQInt(10, s);
-			printResultCovertFrame();
-			ConvertToAll(qint);
+			printConvertFrame();
 			
 		}break;
 		default:

@@ -68,9 +68,9 @@ int printModeFrame()
 	gotoXY(startMenuX + 10, startMenuY + 2);
 	cout << "0. Back to menu" << endl;
 	gotoXY(startMenuX + 20, startMenuY + 3);
-	cout << "Your Input [  ]" << endl;
+	cout << "Your Input [ ]" << endl;
 	int choice;
-	gotoXY(startMenuX + 2 + 12, startMenuY + 3);
+	gotoXY(startMenuX + 2 + 30, startMenuY + 3);
 	cin >> choice;
 	return choice;
 }
@@ -207,7 +207,6 @@ void printQIntConvertResult(int choice, string s)
 		break;
 	}
 
-	_getch();
 }
 
 //In menu lựa chọn hệ cần chuyển đổi.
@@ -224,6 +223,14 @@ void printConvertFrame()
 	cout << "3. HEX: " << endl;
 	gotoXY(startMenuX + 2, startMenuY + 7);
 	cout << "Your Input: " << endl;
+	gotoXY(startMenuX, startMenuY + heightMenu + 1);
+	cout << "================================================================" << endl;
+	gotoXY(startMenuX, startMenuY + heightMenu + 2);
+	cout << "|    - Press ESC to Exit.                                      |" << endl;
+	gotoXY(startMenuX, startMenuY + heightMenu + 3);
+	cout << "|    - Press Enter to make a new convertion.                   |" << endl;
+	gotoXY(startMenuX, startMenuY + heightMenu + 4);
+	cout << "================================================================" << endl;
 	int choice;
 	gotoXY(startMenuX + 2 + 12, startMenuY + 7);
 	cin >> choice;
@@ -241,7 +248,6 @@ void printConvertFrame()
 	case 2:
 		gotoXY(startMenuX + 2 + 8, startMenuY + 2);
 		s = overLoadInput();
-
 		break;
 	case 3:
 		gotoXY(startMenuX + 2 + 8, startMenuY + 5);
