@@ -9,7 +9,7 @@
 
 int main(int argc, char* argv[])
 {
-		
+	/*
 	//khi không thực hiện bằng Command Prompt
 	if (argc == 1)
 	{
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 			}
 			if (lenh == 0) break;
 		} while (true);
-		
+
 	}
 	//khi thực hiện bằng Command Prompt
 	else
@@ -54,14 +54,18 @@ int main(int argc, char* argv[])
 	}
 
 	gotoXY(startFrameX, startMenuY + heightMenu + 5);
-	
+	*/
 
 	/*QInt q;
 	q.scanQInt(10, "1000");
 	q.printQInt(16);*/
-	/*
-		QFloat qf;
-		ScanBinQFloat(qf, cin);
+
+	QFloat qf;
+	while (true)
+	{
+
+
+		ScanQFloat(qf, cin);
 		bool* bit = new bool[128];
 		bit = FDecToBin(qf);
 
@@ -70,8 +74,9 @@ int main(int argc, char* argv[])
 			if (i == 1 || i == 16)
 				cout << " ";
 			cout << bit[i];
-		}*/
+		}
 
-    
+
 		system("pause");
+	}
 }
