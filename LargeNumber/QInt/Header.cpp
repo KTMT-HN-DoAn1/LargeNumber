@@ -236,7 +236,7 @@ void funRunQIntConvert()
 {
 	string s; int choice;
 	//Lấy chuỗi đầu vào trên Frame tuong ứng với vị trí của hệ đã được in sẵn
-	printConvertFrame(s, choice);
+	printConvertFrame(s, choice, 1);
 	//in kết quả
 	printQIntConvertResult(choice, s);
 	//in thông báo cuỗi Frame
@@ -270,6 +270,18 @@ void funRunQInt()
 		if (lenh1 == 0) break;
 		_getch();
 	} while (true);
+}
+
+void funRunQFloat()
+{
+	string s; int choice;
+	//Lấy chuỗi đầu vào trên Frame tuong ứng với vị trí của hệ đã được in sẵn
+	printConvertFrame(s, choice, 2);
+	//in kết quả
+	printQFloatConvertResult(choice, s);
+	//in thông báo cuối Frame
+	printNotif();
+	_getch();
 }
 
 void QIntFileProcessing(fstream& f, fstream& g)

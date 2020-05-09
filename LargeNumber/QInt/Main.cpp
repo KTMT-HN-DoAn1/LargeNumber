@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
 				funRunQInt();
 			}break;
 			case 2://Hàm thực hiện các chức năng với QFloat
-				
+				funRunQFloat();
 				break;
 			case 0:
 				lenh = 0;

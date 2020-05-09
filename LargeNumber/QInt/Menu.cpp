@@ -242,8 +242,34 @@ void printQIntConvertResult(int choice, string s)
 
 }
 
+//In ra bảng số đã được chuyển đổi, choice là lựa chọn hệ input, s là chuỗi số cần đổi.
+void printQFloatConvertResult(int choice, string s)
+{
+	QFloat q;
+	switch (choice)
+	{
+	case 1:
+		ScanQFloat(q, s);
+
+		gotoXY(startMenuX + 2, startMenuY + 2);
+		cout << "2. BIN: ";
+		printQfloat(q, 10);
+
+		break;
+	case 2:
+		ScanBinQFloat(q, s);
+
+		gotoXY(startMenuX + 2, startMenuY + 1);
+		cout << "1. DEC: ";
+		printQfloat(q, 2);
+
+		break;
+	}
+
+}
+
 //In menu lựa chọn hệ cần chuyển đổi.
-void printConvertFrame(string& s, int& choice)
+void printConvertFrame(string& s, int& choice, int mode)
 {
 	printFrame();
 	gotoXY(startMenuX + 2, startMenuY);
@@ -252,8 +278,11 @@ void printConvertFrame(string& s, int& choice)
 	cout << "1. DEC: " << endl;
 	gotoXY(startMenuX + 2, startMenuY + 2);
 	cout << "2. BIN: " << endl;
-	gotoXY(startMenuX + 2, startMenuY + 5);
-	cout << "3. HEX: " << endl;
+	//Chỉ QInt mới convert thành dạng HEX
+	if (mode == 1) {
+		gotoXY(startMenuX + 2, startMenuY + 5);
+		cout << "3. HEX: " << endl;
+	}
 	gotoXY(startMenuX + 2, startMenuY + 7);
 
 	cout << "Your Choice [ ]" << endl;
@@ -274,6 +303,8 @@ void printConvertFrame(string& s, int& choice)
 		s = overLoadInput();
 		break;
 	case 3:
+		if (mode != 1)
+			break;
 		gotoXY(startMenuX + 2 + 8, startMenuY + 5);
 		cin >> s;
 		break;

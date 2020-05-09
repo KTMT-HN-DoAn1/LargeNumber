@@ -233,10 +233,10 @@ int checkInputQFloat(string s)
 
 
 
-void ScanQFloat(QFloat& q, istream& in)
+void ScanQFloat(QFloat& q, string s)
 {
-	string s;
-	in >> s;
+	//string s;
+	//in >> s;
 
 
 	bool isNegative = false;
@@ -397,10 +397,10 @@ void ScanQFloat(QFloat& q, istream& in)
 	delete[]bit;
 }
 
-void ScanBinQFloat(QFloat& x, istream& in)
+void ScanBinQFloat(QFloat& x, string s)
 {
-	string s;
-	in >> s;
+	//string s;
+	//in >> s;
 
 	if (s[0] == '.')
 	{
