@@ -9,7 +9,7 @@
 
 int main(int argc, char* argv[])
 {
-	/*
+
 	//khi không thực hiện bằng Command Prompt
 	if (argc == 1)
 	{
@@ -54,18 +54,18 @@ int main(int argc, char* argv[])
 	}
 
 	gotoXY(startFrameX, startMenuY + heightMenu + 5);
-	*/
 
 	/*QInt q;
 	q.scanQInt(10, "1000");
 	q.printQInt(16);*/
-
+	/*
 	QFloat qf;
 	while (true)
 	{
-
-
-		ScanQFloat(qf, cin);
+		string s;
+		cin >> s;
+		
+		ScanQFloat(qf, s);
 		bool* bit = new bool[128];
 		bit = FDecToBin(qf);
 
@@ -79,4 +79,6 @@ int main(int argc, char* argv[])
 
 		system("pause");
 	}
+	*/
+
 }

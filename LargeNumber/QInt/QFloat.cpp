@@ -75,7 +75,7 @@ QFloat QFloat::operator=(string s)
 	if (strNguyen == "" && strTPhan == "")
 	{
 		this->setZero();
-		return;
+		return *this;
 	}
 
 
@@ -131,7 +131,7 @@ QFloat QFloat::operator=(string s)
 	{
 		this->setInfinity(isNegative);
 		delete[] bit;
-		return;
+		return *this;
 	}
 
 	//doi ve dau day bit
@@ -339,13 +339,13 @@ void printQfloat(QFloat out, int outForm)
 	if (zero) {
 		for (int i = 16; i < 128; i++)
 		{
-			if(bit[i])den = true;
+			if (bit[i])den = true;
 		}
 		cout << "Zero" << endl;
 		return;
 	}
 	mu -= 16383;
-	
+
 	switch (outForm)
 	{
 	case 10:
@@ -429,6 +429,7 @@ void printQfloat(QFloat out, int outForm)
 		}
 	}
 	}
+}
 	
 void shiftRigthFrac(bool* bit)
 {
@@ -669,7 +670,6 @@ void ScanQFloat(QFloat& q, string s)
 			q.data[i / 32] = q.data[i / 32] | (1 << (31 - i % 32));
 		}
 	}
-
 	delete[]bit;
 }
 

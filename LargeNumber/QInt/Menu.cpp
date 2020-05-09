@@ -249,19 +249,31 @@ void printQFloatConvertResult(int choice, string s)
 	switch (choice)
 	{
 	case 1:
+	{
 		ScanQFloat(q, s);
 
+		bool* bit = new bool[128];
+		bit = FDecToBin(q);
+
+		for (int i = 0; i < 128; i++)
+		{
+			if (i == 1 || i == 16)
+				cout << " ";
+			cout << bit[i];
+		}
+		_getch();
 		gotoXY(startMenuX + 2, startMenuY + 2);
 		cout << "2. BIN: ";
-		printQfloat(q, 10);
+		printQfloat(q, 2);
 
 		break;
+	}
 	case 2:
 		ScanBinQFloat(q, s);
 
 		gotoXY(startMenuX + 2, startMenuY + 1);
 		cout << "1. DEC: ";
-		printQfloat(q, 2);
+		printQfloat(q, 10);
 
 		break;
 	}

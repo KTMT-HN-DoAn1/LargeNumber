@@ -55,11 +55,11 @@ Arithmetic Type(string s)
 
 QInt calcuQInt(int& type, string a, string b, string c)
 {
-	int temp = 0;
+	int temp = 1;
 	QInt x, y;
-	if (c != "<<" || c != ">>" || c != "ROL" || c != "ROR" || c != "rol" || c != "ror")
+	if (c == "<<" || c == ">>" || c == "ROL" || c == "ROR" || c == "rol" || c == "ror")
 	{
-		temp = 1;
+		temp = 0;
 	}//để đánh dáu nếu gặp toán tử dịch bit
 	switch (type)
 	{
@@ -68,7 +68,7 @@ QInt calcuQInt(int& type, string a, string b, string c)
 		//hàm thực hiện tính toán với hệ và các toán hạng, số hạng được truyền vào
 		//chuyển a và b thành 2 dãy bit trong QInt
 		x.scanQInt(2, a);
-		if (temp) y.scanQInt(10, b);
+		if (!temp) y.scanQInt(10, b);
 		else 	y.scanQInt(2, b);
 		break;
 	case 10: case 1://nếu là hệ 10
@@ -77,13 +77,13 @@ QInt calcuQInt(int& type, string a, string b, string c)
 		break;
 	case 16: case 3://nế là hệ 16
 		x.scanQInt(16, a);
-		if (temp) y.scanQInt(10, b);
+		if (!temp) y.scanQInt(10, b);
 		else 	y.scanQInt(16, b);
 		break;
 	default:
 		break;
 	}
-	if (c != "<" || c != ">" || c != "==" || c != ">=" || c != "<=")
+	if (c == "<" || c == ">" || c == "==" || c == ">=" || c == "<=")
 	{
 		type = -1;
 	}//để đánh dáu nếu gặp toán tử logic
@@ -218,16 +218,16 @@ void funRunQIntArithmetic()
 
 	if (type == -1)
 	{
-		//in kết quả ra màn hình
-		printQIntinFrame(res);
-	}
-	else
-	{
 		gotoXY(startFrameX + 30, startFrameY + 7);
 		if (res.data[3])
 			cout << "TRUE" << endl;
 		else
-			cout << "FALSE" << endl;
+			cout << "FALSE" << endl;		
+	}
+	else
+	{
+		//in kết quả ra màn hình
+		printQIntinFrame(res);
 	}
 
 }
