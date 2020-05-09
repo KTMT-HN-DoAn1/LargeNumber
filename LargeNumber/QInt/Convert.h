@@ -65,6 +65,9 @@ string convertRun(string t1, string t2, string num);
 //Hàm chuyển một số QInt sang tất cả các hệ và in ra màn hình theo định dạng
 void ConvertToAll(QInt& x);
 
+//Hàm tổng 2 chuỗi
+string strPlus(string s1, string s2);
+
 //Hàm xử lỹ chung cho các chức năng với QFloat
 
 

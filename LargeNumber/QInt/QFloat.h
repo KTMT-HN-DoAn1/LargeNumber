@@ -21,3 +21,4 @@ void ScanBinQFloat(QFloat& x, istream& in);
 QFloat FBinToDec(bool* bit);
 bool* FDecToBin(QFloat x);
 void plusOneBit(bool* bit);
+void printQfloat(QFloat out, int outForm);
