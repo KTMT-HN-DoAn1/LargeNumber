@@ -258,7 +258,9 @@ void funRunQInt()
 		break;
 		case 2://các thao tác với chuyển dổi số giữa các hệ
 		{
+
 			funRunQIntConvert();
+
 			
 		}break;
 		default:

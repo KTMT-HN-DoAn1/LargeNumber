@@ -650,3 +650,19 @@ void ConvertToAll(QInt& x)
 	//hàm in theo định dạng chuỗi nhị phân
 
 }
+
+string strPlus(string s1, string s2)
+{
+	int nho = 0;
+	for (int i = s1.length() - 1; i >= 0; --i)
+	{
+		int add1 = s1[i] - '0';
+		int add2 = s2[i] - '0';
+		add1 = add1 + add2 + nho;
+		if (add1 >= 10)nho = 1;
+		else nho = 0;
+		char temp = add1 + '0';
+		s1[i] = temp;
+	}
+	return s1;
+}

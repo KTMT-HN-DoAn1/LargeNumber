@@ -62,6 +62,139 @@ void plusOneBit(bool* bit)
 	}
 }
 
+void printQfloat(QFloat out, int outForm)
+{
+	bool* bit = new bool[128];
+	for (int i = 0; i < 128; ++i)
+	{
+		bit[i] = 0;
+	}
+	for (int i = 0; i < 128; ++i)
+	{
+		bit[i] = (out.data[i / 32] >> (31 - i % 32) & 1);
+	}
+	bool negative = false;
+	if (bit[0])negative = true;
+	int mu = 0;
+	bool inf = true;
+	bool zero = true;
+	for (int i = 1; i < 16; ++i)
+	{
+		mu = mu * 2;
+		if (bit[i])
+		{
+			mu += 1;
+			zero = false;
+		}
+		else inf = false;
+	}
+	if (inf)
+	{
+		for (int i = 16; i < 128; i++)
+		{
+			if (bit[i])cout << "Not a Number" << endl;
+			return;
+		}
+		cout << "Infinity" << endl;
+		return;
+	}
+	bool den = false;
+	if (zero) {
+		for (int i = 16; i < 128; i++)
+		{
+			if(bit[i])den = true;
+		}
+		cout << "Zero" << endl;
+		return;
+	}
+	mu -= 16383;
+	
+	switch (outForm)
+	{
+	case 10:
+	{
+		string strN = "";
+		if (den) {
+			strN = "0";
+			mu = -16382;
+		}
+		else strN = "1";
+		for (int i = 16; i < 16 + mu; ++i)
+		{
+			strMultiTwo(strN);
+			if (bit[i])strPlusOne(strN);
+		}
+
+		string strTP = "0";
+		string s2 = "5";
+		for (int i = 16 + mu; i < 128; ++i)
+		{
+			if (i <= 16) {
+				if (!den && (mu < 0) && (i = 15)) {
+					strTP = strPlus(strTP, s2);
+					s2 += "0";
+					strDivTwo(s2);
+				}
+				else {
+					strTP += "0";
+					s2 += "0";
+					strDivTwo(s2);
+				}
+			}
+			else {
+				if (bit[i])strTP = strPlus(strTP, s2);
+				strTP += "0";
+				s2 += "0";
+				strDivTwo(s2);
+			}
+		}
+		cout << strN << "." << strTP << endl;
+		break;
+	}
+	case 2:
+	{
+		if (den) {
+			cout << "0.";
+			for (int i = 0; i < 16383; i++) {
+				cout << "0";
+			}
+			for (int i = 16; i < 128; i++) {
+				cout << bit[i];
+			}
+		}
+		else
+		{
+			if (mu > 0) {
+				for (int i = 16; i < 16 + mu; ++i) {
+					cout << "1";
+					if (i < 128)cout << bit[i];
+					else cout << "0";
+				}
+				if (mu < 112) {
+					cout << ".";
+					for (int i = 16 + mu; i < 128; ++i) {
+						cout << bit[i];
+					}
+				}
+				else cout << ".0";
+			}
+			else {
+				cout << "0.";
+				for (int i = 0; i < mu; ++i)
+				{
+					cout << "0";
+				}
+				for (int i = 16; i < 128; ++i) {
+					cout << bit[i];
+				}
+			}
+
+		}
+	}
+	}
+	
+}
+
 
 int countPoint(string s)
 {
@@ -105,12 +238,6 @@ void ScanQFloat(QFloat& q, istream& in)
 	string s;
 	in >> s;
 
-	// Mảng chứa 128bits
-	bool* bit = new bool[128];
-	for (int i = 0; i < 128; i++)
-	{
-		bit[i] = 0;
-	}
 
 	bool isNegative = false;
 	if (s[0] == '-')
@@ -119,33 +246,56 @@ void ScanQFloat(QFloat& q, istream& in)
 		s.erase(0, 1);
 	}
 
-	//
-	while (s[0] == '0' && s[1] != '.')
-	{
-		s.erase(0, 1);
-	}
-
-	//chuoi toan so 0
-	if (s == "")
-	{
-		//q = "0";
-		return;
-	}
 
 	//tach thanh phan nguyen va phan thap phan
 	string strNguyen = "";
 	string strTPhan = "";
 	int pos = s.find('.');
-	strNguyen = s.substr(0, pos);
-	strTPhan = s.substr(pos + 1);
+	if (pos < 0)
+	{
+		strNguyen = s;
+	}
+	else
+	{
+		strNguyen = s.substr(0, pos);
+		strTPhan = s.substr(pos + 1);
+	}
+
+
+	//bo so 0 thua
+	while (strNguyen.length() > 0 && strNguyen[0] == '0')
+	{
+		strNguyen.erase(0, 1);
+	}
+
+	while (strTPhan.length() > 0 && strTPhan[strTPhan.length() - 1] == '0')
+	{
+		strTPhan.erase(strTPhan.length() - 1, 1);
+	}
+
+	//chuoi toan so 0
+	if (strNguyen == "" && strTPhan == "")
+	{
+		//q = "0";
+		return;
+	}
+
+
 
 	int exponent = -1;
 
+	// Mảng chứa 128bits
+	bool* bit = new bool[128];
+	for (int i = 0; i < 128; i++)
+	{
+		bit[i] = 0;
+	}
 
 	//chuyen phan nguyen thanh nhi phan
 
 	int count = 0;
-	while (strNguyen[0] != '0')
+
+	while (strNguyen.length() > 0 && strNguyen[0] != '0')
 	{
 		if (count > 127) break;
 		int tmp = strNguyen[strNguyen.length() - 1] - '0';
@@ -245,4 +395,101 @@ void ScanQFloat(QFloat& q, istream& in)
 	}
 
 	delete[]bit;
+}
+
+void ScanBinQFloat(QFloat& x, istream& in)
+{
+	string s;
+	in >> s;
+
+	if (s[0] == '.')
+	{
+		s.insert(0, "0");
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		x.data[i] = 0;
+	}
+
+	// Mảng chứa 128bits
+	bool* bit = new bool[128];
+	for (int i = 0; i < 128; i++)
+	{
+		bit[i] = 0;
+	}
+
+	while (s[0] == '0' && s[1] != '.')
+	{
+		s.erase(0, 1);
+	}
+
+	int isNegative = 0;
+	if (s[0] == '1')
+	{
+		isNegative = 1;
+	}
+
+	bit[0] = isNegative;
+	int exponent = 0;
+
+	int viTriSo1DauTienTrongChuoiS = s.find('1');
+	int viTriDauCham = s.find('.');
+
+	if (viTriSo1DauTienTrongChuoiS == -1)
+	{
+		return;
+	}
+	else
+	{
+		if (viTriDauCham == -1)
+		{
+			exponent = s.length() - 1;
+		}
+		else
+		{
+			int Hieu = viTriSo1DauTienTrongChuoiS - viTriDauCham;
+			if (Hieu > 0)
+			{
+				exponent = -Hieu;
+			}
+			if (Hieu < 0)
+			{
+				exponent = -(Hieu + 1);
+			}
+		}
+
+		exponent += 16383;
+		for (int i = 1; i < 16; i++)
+		{
+			bit[16 - i] = (exponent >> (i - 1)) & 1;
+		}
+
+		int k = 16;
+		for (int i = viTriSo1DauTienTrongChuoiS + 1; i < s.length(); i++)
+		{
+			if (s[i] != '.')
+			{
+				bit[k] = (s[i] - '0');
+				k++;
+			}
+		}
+		if (k < 127)
+		{
+			for (int i = k; i < 128; i++)
+			{
+				bit[i] = 0;
+			}
+		}
+
+		for (int i = 0; i < 128; i++)
+		{
+			if (bit[i] == 1)
+			{
+				x.data[i / 32] = x.data[i / 32] | (1 << (31 - i % 32));
+			}
+		}
+
+		delete[]bit;
+	}
 }

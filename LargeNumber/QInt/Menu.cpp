@@ -91,9 +91,10 @@ int printModeFrame()
 	gotoXY(startMenuX + 10, startMenuY + 2);
 	cout << "0. Back to menu" << endl;
 	gotoXY(startMenuX + 20, startMenuY + 3);
-	cout << "Your Input [  ]" << endl;
+	cout << "Your Input [ ]" << endl;
 	int choice;
 	gotoXY(startMenuX + 20 + 12, startMenuY + 3);
+
 	cin >> choice;
 	return choice;
 }
@@ -238,6 +239,7 @@ void printQIntConvertResult(int choice, string s)
 		q.printQInt(2);
 		break;
 	}
+
 }
 
 //In menu lựa chọn hệ cần chuyển đổi.
@@ -253,8 +255,10 @@ void printConvertFrame(string& s, int& choice)
 	gotoXY(startMenuX + 2, startMenuY + 5);
 	cout << "3. HEX: " << endl;
 	gotoXY(startMenuX + 2, startMenuY + 7);
+
 	cout << "Your Choice [ ]" << endl;
 	gotoXY(startMenuX + 2 + 13, startMenuY + 7);
+
 	cin >> choice;
 
 	//Khi chọn 1 hệ nào đó, con trỏ sẽ nhảy lên dòng của hệ đó.
@@ -268,12 +272,10 @@ void printConvertFrame(string& s, int& choice)
 	case 2:
 		gotoXY(startMenuX + 2 + 8, startMenuY + 2);
 		s = overLoadInput();
-
 		break;
 	case 3:
 		gotoXY(startMenuX + 2 + 8, startMenuY + 5);
 		cin >> s;
-
 		break;
 	}
 }
