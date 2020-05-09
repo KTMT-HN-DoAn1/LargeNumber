@@ -37,6 +37,9 @@ void gotoXY(int x, int y);
 // hàm thay đổi màu sắc chữ
 void Color(int colour);
 
+//In thông báo
+void printNotif();
+
 //Frame
 void printFrame();
 
@@ -47,7 +50,7 @@ int printMainMenu();
 int printModeFrame();
 
 //Khung màn làm việc chuyển đổi giữa các hệ
-void printConvertFrame();
+void printConvertFrame(string& s, int& choice);
 
 //Khung in kết quả
 void printResultCovertFrame();

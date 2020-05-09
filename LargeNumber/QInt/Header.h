@@ -28,6 +28,9 @@ QInt runArithmetic(string s, int& type);
 //Hàm chạy chức năng tính toán cho QInt
 void funRunQIntArithmetic();
 
+//Hàm thực hiện chức năng cconvert QInt
+void funRunQIntConvert();
+
 //Hàm thao tác với QInt
 void funRunQInt();
 

@@ -55,22 +55,30 @@ Arithmetic Type(string s)
 
 QInt calcuQInt(int& type, string a, string b, string c)
 {
+	int temp = 0;
 	QInt x, y;
+	if (c != "<<" || c != ">>" || c != "ROL" || c != "ROR" || c != "rol" || c != "ror")
+	{
+		temp = 1;
+	}//để đánh dáu nếu gặp toán tử dịch bit
 	switch (type)
 	{
+
 	case 2://nếu là hệ 2
 		//hàm thực hiện tính toán với hệ và các toán hạng, số hạng được truyền vào
 		//chuyển a và b thành 2 dãy bit trong QInt
 		x.scanQInt(2, a);
-		y.scanQInt(2, b);
+		if (temp) y.scanQInt(10, b);
+		else 	y.scanQInt(2, b);
 		break;
-	case 10://nếu là hệ 10
+	case 10: case 1://nếu là hệ 10
 		x.scanQInt(10, a);
 		y.scanQInt(10, b);
 		break;
-	case 16://nế là hệ 16
+	case 16: case 3://nế là hệ 16
 		x.scanQInt(16, a);
-		y.scanQInt(16, b);
+		if (temp) y.scanQInt(10, b);
+		else 	y.scanQInt(16, b);
 		break;
 	default:
 		break;
@@ -191,8 +199,21 @@ void funRunQIntArithmetic()
 	gotoXY(startMenuX + 2, startMenuY + 8);
 	cout << "Expression: " << endl;
 	gotoXY(startMenuX + 2 , startMenuY + 9);
-	cin.ignore();
-	getline(cin, str); //nhận vào chuỗi phép toán
+	
+	if (type != 2)
+	{
+		cin.ignore();
+		getline(cin, str); //nhận vào chuỗi phép toán
+	}
+	else
+	{
+		cin.ignore();
+		string temp; char c;
+		str = overLoadInput();
+		getline(cin, temp);
+		str += " "; str += temp;
+	}
+
 	QInt res = runArithmetic(str, type);
 
 	if (type == -1)
@@ -211,6 +232,17 @@ void funRunQIntArithmetic()
 
 }
 
+void funRunQIntConvert()
+{
+	string s; int choice;
+	//Lấy chuỗi đầu vào trên Frame tuong ứng với vị trí của hệ đã được in sẵn
+	printConvertFrame(s, choice);
+	//in kết quả
+	printQIntConvertResult(choice, s);
+	//in thông báo cuỗi Frame
+	printNotif();
+}
+
 void funRunQInt()
 {
 	QInt qint;
@@ -226,11 +258,7 @@ void funRunQInt()
 		break;
 		case 2://các thao tác với chuyển dổi số giữa các hệ
 		{
-			string s;
-			cin >> s;
-			qint.scanQInt(10, s);
-			printResultCovertFrame();
-			ConvertToAll(qint);
+			funRunQIntConvert();
 			
 		}break;
 		default:

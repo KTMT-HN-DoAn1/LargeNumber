@@ -23,6 +23,7 @@ public:
 
 	//Toán tử &.
 	QInt operator&(const QInt&);
+	QInt operator& (const int&);
 	//Toán tử |.
 	QInt operator|(const QInt&);
 	//Toán tử ^.

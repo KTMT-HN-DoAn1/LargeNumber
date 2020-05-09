@@ -1,5 +1,0 @@
-﻿  QFloat.cpp
-C:\Users\Minh Tan\Documents\GitHub\LargeNumber\LargeNumber\QInt\QFloat.cpp(68,20): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Minh Tan\Documents\GitHub\LargeNumber\LargeNumber\QInt\QFloat.cpp(82,20): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Minh Tan\Documents\GitHub\LargeNumber\LargeNumber\QInt\QFloat.cpp(138,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  QInt.vcxproj -> C:\Users\Minh Tan\Documents\GitHub\LargeNumber\LargeNumber\x64\Debug\QInt.exe

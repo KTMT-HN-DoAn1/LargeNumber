@@ -9,6 +9,7 @@
 
 int main(int argc, char* argv[])
 {
+		
 	//khi không thực hiện bằng Command Prompt
 	if (argc == 1)
 	{
@@ -42,14 +43,14 @@ int main(int argc, char* argv[])
 	else
 	{
 		//Kiểm tra file đầu vào là QInt_test hay là QFloat_test
-
+		if(1)
+		//khi không thực hiện bằng Command)
 		{
 			fstream f, g;
 			f.open("QInt_input.txt");//f.open(argv[1]);
 			g.open("QInt_output.txt");//g.open("argv[2]);
 			QIntFileProcessing(f, g);
 		}
-		
 	}
 
 	gotoXY(startFrameX, startMenuY + heightMenu + 5);
