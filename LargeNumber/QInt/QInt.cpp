@@ -65,6 +65,7 @@ void QInt::printQInt(int outChoice)
 		bit[i] = 0;
 	}
 
+	Color(ColorCode_White);
 	switch (outChoice)
 	{
   //Chuyển QInt thành mảng nhị phân và từ đó chuyển sang chuỗi thập phân.
@@ -103,6 +104,7 @@ void QInt::printQInt(int outChoice)
 	}
 
 	delete[]bit;
+	Color(ColorCode_Yellow);
 }
 
 QInt QInt::operator&(const QInt& qint)
@@ -111,6 +113,16 @@ QInt QInt::operator&(const QInt& qint)
 	for (int i = 0; i < 4; i++)
 	{
 		result.data[i] = this->data[i] & qint.data[i];
+	}
+	return result;
+}
+QInt QInt::operator&(const int& a)
+{
+	QInt result; int temp;
+	for (int i = 0; i < 4; i++)
+	{
+		temp= this->data[i] &a;
+		result.data[i] = temp;
 	}
 	return result;
 }
@@ -312,11 +324,19 @@ QInt QInt::operator*(QInt& q)
 		QInttoTwoComplement(q);
 	}*/
 	QInt result;
-	QInt p(1);
-	while (!q.zero())
+	QInt t2;
+	int t1;
+	/*while (!q.zero()) 
 	{
 		if (((q & p) - p).zero()) result = result + *this;
 		*this = *this << 1;
+	}*/
+	for (int i = 0; i < 128; i++)
+	{
+		t1 = (q >> i).data[3] & 1; 
+		t2 = (*this) & t1;
+		QInt temp = (t2 << i);
+		result = result + temp;
 	}
 	/*if (negative)
 	{

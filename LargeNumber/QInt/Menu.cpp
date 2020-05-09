@@ -18,18 +18,41 @@ void Color(int colour)
 	SetConsoleTextAttribute(color, colour);
 }
 
+void printNotif()
+{
+	gotoXY(startMenuX, startMenuY + heightMenu + 1);
+	cout << "================================================================" << endl;
+	gotoXY(startMenuX, startMenuY + heightMenu + 2);
+	cout << "|                                                              |" << endl;
+	gotoXY(startMenuX, startMenuY + heightMenu + 3);
+	cout << "|                                                              |" << endl;
+	gotoXY(startMenuX, startMenuY + heightMenu + 4);
+	cout << "================================================================" << endl;
+	Color(ColorCode_DarkGreen);
+	gotoXY(startMenuX + 5, startMenuY + heightMenu + 2);
+	cout << "- Press anykey to back the previous menu." << endl;
+	gotoXY(startMenuX + 5, startMenuY + heightMenu + 3);
+	cout << "- Press Enter to make a new one. " << endl;
+	Color(14);
+}
+
 void printFrame()
 {
 	Color(14);
 	int x = startFrameX;
 	int y = startFrameY;
+
 	gotoXY(x, y);
 	cout << "================================================================" << endl;
 	gotoXY(x, y + 1);
-	cout << "|                       MY CALCULATOR                          |" << endl;
+	cout << "|                                                              |" << endl;
 	gotoXY(x, y + 2);
 	cout << "================================================================" << endl;
-
+	Color(ColorCode_Cyan);
+	gotoXY(x + 26, y + 1);
+	cout << "MY CALCULATOR" << endl;
+	Color(14);
+	
 	for (int i = 0; i <= heightMenu; ++i)
 	{
 		gotoXY(x, startMenuY + i);
@@ -70,7 +93,8 @@ int printModeFrame()
 	gotoXY(startMenuX + 20, startMenuY + 3);
 	cout << "Your Input [ ]" << endl;
 	int choice;
-	gotoXY(startMenuX + 2 + 30, startMenuY + 3);
+	gotoXY(startMenuX + 20 + 12, startMenuY + 3);
+
 	cin >> choice;
 	return choice;
 }
@@ -92,7 +116,9 @@ string overLoadInput() {
 	while (c = _getch()) {
 
 		//Kết thúc khi user nhập Enter.
-		if (c == '\r') break;
+		if (c == '\r' || c == ' ') {
+			cout << c; break;
+		}
 
 		//Khi user nhập phím xóa:
 		if (c == '\b') {
@@ -154,7 +180,7 @@ string overLoadInput() {
 		if (countCh == 50) {
 			gotoXY(startMenuX + 1, startMenuY + 2 + 1);
 			line = 1;
-		}		
+		}
 		//Xuống dòng 2.
 		if (countCh == 110) {
 			gotoXY(startMenuX + 1, startMenuY + 2 + 2);
@@ -163,6 +189,13 @@ string overLoadInput() {
 		
 	}
 	//bits.resize(count);
+	for (int i = 0; i < bits.length(); i++)
+	{
+		if (bits[i] == ' ')
+		{
+			bits.erase(bits.begin() + i);
+		}
+	}
 	return bits;
 }
 
@@ -210,7 +243,7 @@ void printQIntConvertResult(int choice, string s)
 }
 
 //In menu lựa chọn hệ cần chuyển đổi.
-void printConvertFrame()
+void printConvertFrame(string& s, int& choice)
 {
 	printFrame();
 	gotoXY(startMenuX + 2, startMenuY);
@@ -222,20 +255,11 @@ void printConvertFrame()
 	gotoXY(startMenuX + 2, startMenuY + 5);
 	cout << "3. HEX: " << endl;
 	gotoXY(startMenuX + 2, startMenuY + 7);
-	cout << "Your Input: " << endl;
-	gotoXY(startMenuX, startMenuY + heightMenu + 1);
-	cout << "================================================================" << endl;
-	gotoXY(startMenuX, startMenuY + heightMenu + 2);
-	cout << "|    - Press ESC to Exit.                                      |" << endl;
-	gotoXY(startMenuX, startMenuY + heightMenu + 3);
-	cout << "|    - Press Enter to make a new convertion.                   |" << endl;
-	gotoXY(startMenuX, startMenuY + heightMenu + 4);
-	cout << "================================================================" << endl;
-	int choice;
-	gotoXY(startMenuX + 2 + 12, startMenuY + 7);
-	cin >> choice;
 
-	string s;
+	cout << "Your Choice [ ]" << endl;
+	gotoXY(startMenuX + 2 + 13, startMenuY + 7);
+
+	cin >> choice;
 
 	//Khi chọn 1 hệ nào đó, con trỏ sẽ nhảy lên dòng của hệ đó.
 	switch (choice)
@@ -252,11 +276,8 @@ void printConvertFrame()
 	case 3:
 		gotoXY(startMenuX + 2 + 8, startMenuY + 5);
 		cin >> s;
-
 		break;
 	}
-
-	printQIntConvertResult(choice, s);
 }
 
 void printResultCovertFrame()
@@ -269,26 +290,17 @@ void printResultCovertFrame()
 	cout << "2. BIN: " << endl;
 	gotoXY(startMenuX + 2, startMenuY + 5);
 	cout << "3. HEX: " << endl;
-	gotoXY(startMenuX, startMenuY + heightMenu + 1);
-	cout << "================================================================" << endl;
-	gotoXY(startMenuX, startMenuY + heightMenu + 2);
-	cout << "|    - Press ESC to Exit.                                      |" << endl;
-	gotoXY(startMenuX, startMenuY + heightMenu + 3);
-	cout << "|    - Press Enter to make a new convertion.                   |" << endl;
-	gotoXY(startMenuX, startMenuY + heightMenu + 4);
-	cout << "================================================================" << endl;
+	printNotif();
 }
 
 
 void  printQIntinFrame(QInt q)
 {
 	bool* bit = DecToBin(q);
-
 	gotoXY(startMenuX + 2 + 8, startMenuY + 1);
-	cout << BinToDecStr(bit);
+	q.printQInt(10);
 	gotoXY(startMenuX + 2 + 8, startMenuY + 2);
-	//in dãy nhị phân theo định dạng
+	q.printQInt(2);
 	gotoXY(startMenuX + 2 + 8, startMenuY + 5);
-	cout << DecToHex(q);
-
+	q.printQInt(16);
 }
