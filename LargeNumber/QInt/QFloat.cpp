@@ -312,7 +312,8 @@ void printQfloat(QFloat out, int outForm)
 		bit[i] = (out.data[i / 32] >> (31 - i % 32) & 1);
 	}
 	bool negative = false;
-	if (bit[0])negative = true;
+	if (bit[0])
+		negative = true;
 	int mu = 0;
 	bool inf = true;
 	bool zero = true;
@@ -330,7 +331,8 @@ void printQfloat(QFloat out, int outForm)
 	{
 		for (int i = 16; i < 128; i++)
 		{
-			if (bit[i])cout << "Not a Number" << endl;
+			if (bit[i])
+				cout << "Not a Number" << endl;
 			return;
 		}
 		cout << "Infinity" << endl;
@@ -368,7 +370,7 @@ void printQfloat(QFloat out, int outForm)
 		for (int i = 16 + mu; i < 128; ++i)
 		{
 			if (i <= 16) {
-				if (!den && (mu < 0) && (i = 15)) {
+				if (!den && (mu < 0) && (i == 15)) {
 					strTP = strPlus(strTP, s2);
 					s2 += "0";
 					strDivTwo(s2);
@@ -402,9 +404,9 @@ void printQfloat(QFloat out, int outForm)
 		}
 		else
 		{
-			if (mu > 0) {
+			if (mu >= 0) {
+				cout << "1";
 				for (int i = 16; i < 16 + mu; ++i) {
-					cout << "1";
 					if (i < 128)cout << bit[i];
 					else cout << "0";
 				}
@@ -509,7 +511,7 @@ void printQFloatToFile(fstream& f, QFloat out, int outForm)
 		for (int i = 16 + mu; i < 128; ++i)
 		{
 			if (i <= 16) {
-				if (!den && (mu < 0) && (i = 15)) {
+				if (!den && (mu < 0) && (i == 15)) {
 					strTP = strPlus(strTP, s2);
 					s2 += "0";
 					strDivTwo(s2);
