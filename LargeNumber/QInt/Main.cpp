@@ -9,11 +9,7 @@
 
 int main(int argc, char* argv[])
 {
-<<<<<<< Updated upstream
-		
-=======
-	
->>>>>>> Stashed changes
+
 	//khi không thực hiện bằng Command Prompt
 	if (argc == 1)
 	{
@@ -28,7 +24,7 @@ int main(int argc, char* argv[])
 				funRunQInt();
 			}break;
 			case 2://Hàm thực hiện các chức năng với QFloat
-				
+				funRunQFloat();
 				break;
 			case 0:
 				lenh = 0;
@@ -41,7 +37,7 @@ int main(int argc, char* argv[])
 			}
 			if (lenh == 0) break;
 		} while (true);
-		
+
 	}
 	//khi thực hiện bằng Command Prompt
 	else
@@ -58,25 +54,18 @@ int main(int argc, char* argv[])
 	}
 
 	gotoXY(startFrameX, startMenuY + heightMenu + 5);
-	
 
 	/*QInt q;
 	q.scanQInt(10, "1000");
 	q.printQInt(16);*/
-<<<<<<< Updated upstream
-	/*
-		QFloat qf;
-		ScanBinQFloat(qf, cin);
-=======
 
-	/*QFloat qf;
+	QFloat qf;
 	while (true)
 	{
-
 		string s;
 		cin >> s;
-		ScanQFloat(qf,s);
->>>>>>> Stashed changes
+		
+		ScanQFloat(qf, s);
 		bool* bit = new bool[128];
 		bit = FDecToBin(qf);
 
@@ -85,12 +74,11 @@ int main(int argc, char* argv[])
 			if (i == 1 || i == 16)
 				cout << " ";
 			cout << bit[i];
-		}*/
+		}
 
-    
+
 		system("pause");
-<<<<<<< Updated upstream
-=======
+
 	}*/
->>>>>>> Stashed changes
+
 }

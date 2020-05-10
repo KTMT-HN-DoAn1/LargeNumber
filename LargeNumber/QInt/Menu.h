@@ -3,6 +3,7 @@
 #include<conio.h>
 #include"QInt.h"
 #include"Convert.h"
+#include"QFloat.h"
 #include<Windows.h>
 
 #define ColorCode_Back			0
@@ -50,7 +51,7 @@ int printMainMenu();
 int printModeFrame();
 
 //Khung màn làm việc chuyển đổi giữa các hệ
-void printConvertFrame(string& s, int& choice);
+void printConvertFrame(string& s, int& choice, int mode);
 
 //Khung in kết quả
 void printResultCovertFrame();
@@ -58,6 +59,8 @@ void printResultCovertFrame();
 string overLoadInput();
 
 void printQIntConvertResult(int choice, string s);
+
+void printQFloatConvertResult(int choice, string s);
 
 //Hàm in số QInt kết quả ra Frame trên console
 void printQIntinFrame(QInt q);

@@ -68,8 +68,8 @@ QInt calcuQInt(int& type, string a, string b, string c)
 		//hàm thực hiện tính toán với hệ và các toán hạng, số hạng được truyền vào
 		//chuyển a và b thành 2 dãy bit trong QInt
 		x.scanQInt(2, a);
-		if (!temp) y.scanQInt(2, b);
-		else 	y.scanQInt(10, b);
+		if (!temp) y.scanQInt(10, b);
+		else 	y.scanQInt(2, b);
 		break;
 	case 10: case 1://nếu là hệ 10
 		x.scanQInt(10, a);
@@ -77,13 +77,13 @@ QInt calcuQInt(int& type, string a, string b, string c)
 		break;
 	case 16: case 3://nế là hệ 16
 		x.scanQInt(16, a);
-		if (temp) y.scanQInt(10, b);
+		if (!temp) y.scanQInt(10, b);
 		else 	y.scanQInt(16, b);
 		break;
 	default:
 		break;
 	}
-	if (c != "<" || c != ">" || c != "==" || c != ">=" || c != "<=")
+	if (c == "<" || c == ">" || c == "==" || c == ">=" || c == "<=")
 	{
 		type = -1;
 	}//để đánh dáu nếu gặp toán tử logic
@@ -207,16 +207,16 @@ void funRunQIntArithmetic()
 
 	if (type == -1)
 	{
-		//in kết quả ra màn hình
-		printQIntinFrame(res);
-	}
-	else
-	{
 		gotoXY(startFrameX + 30, startFrameY + 7);
 		if (res.data[3])
 			cout << "TRUE" << endl;
 		else
-			cout << "FALSE" << endl;
+			cout << "FALSE" << endl;		
+	}
+	else
+	{
+		//in kết quả ra màn hình
+		printQIntinFrame(res);
 	}
 
 }
@@ -225,7 +225,7 @@ void funRunQIntConvert()
 {
 	string s; int choice;
 	//Lấy chuỗi đầu vào trên Frame tuong ứng với vị trí của hệ đã được in sẵn
-	printConvertFrame(s, choice);
+	printConvertFrame(s, choice, 1);
 	//in kết quả
 	printQIntConvertResult(choice, s);
 	//in thông báo cuỗi Frame
@@ -259,6 +259,18 @@ void funRunQInt()
 		if (lenh1 == 0) break;
 		_getch();
 	} while (true);
+}
+
+void funRunQFloat()
+{
+	string s; int choice;
+	//Lấy chuỗi đầu vào trên Frame tuong ứng với vị trí của hệ đã được in sẵn
+	printConvertFrame(s, choice, 2);
+	//in kết quả
+	printQFloatConvertResult(choice, s);
+	//in thông báo cuối Frame
+	printNotif();
+	_getch();
 }
 
 void QIntFileProcessing(fstream& f, fstream& g)

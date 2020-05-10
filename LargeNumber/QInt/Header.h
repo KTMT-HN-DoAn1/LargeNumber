@@ -34,6 +34,9 @@ void funRunQIntConvert();
 //Hàm thao tác với QInt
 void funRunQInt();
 
+//Hàm thao tác với QFloat
+void funRunQFloat();
+
 //Hàm xử lý các thao tác làm việc qua file
 void QIntFileProcessing(fstream& f, fstream& g);
 

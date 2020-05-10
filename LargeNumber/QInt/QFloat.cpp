@@ -9,13 +9,19 @@ QFloat::QFloat()
 	}
 }
 
+QFloat::QFloat(QFloat& q)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		data[i] = q.data[i];
+	}
+}
+
 
 QFloat::~QFloat()
 {
 }
 
-<<<<<<< Updated upstream
-=======
 QFloat QFloat::operator=(QFloat& q)
 {
 	if (this != &q)
@@ -245,7 +251,7 @@ void QFloat::setNaN()
 	data[1] = (65535 << 16);	//0  111 1111 1111 1111  1000...
 }
 
->>>>>>> Stashed changes
+
 QFloat FBinToDec(bool* bit)
 {
 	QFloat res;
@@ -424,11 +430,7 @@ void printQfloat(QFloat out, int outForm)
 		}
 	}
 	}
-<<<<<<< Updated upstream
-	
-=======
 }
-
 void shiftRigthFrac(bool* bit)
 {
 	for (int i = 127; i > 16; i--)
@@ -436,7 +438,7 @@ void shiftRigthFrac(bool* bit)
 		bit[i] = bit[i - 1];
 	}
 	bit[16] = 0;
->>>>>>> Stashed changes
+
 }
 
 
@@ -477,15 +479,8 @@ int checkInputQFloat(string s)
 
 
 
-void ScanQFloat(QFloat& q, istream& in)
+void ScanQFloat(QFloat& q, string s)
 {
-<<<<<<< Updated upstream
-	string s;
-	in >> s;
-
-
-=======
->>>>>>> Stashed changes
 	bool isNegative = false;
 	if (s[0] == '-')
 	{
@@ -522,7 +517,7 @@ void ScanQFloat(QFloat& q, istream& in)
 	//chuoi toan so 0
 	if (strNguyen == "" && strTPhan == "")
 	{
-		//q = "0";
+		q.setZero();
 		return;
 	}
 
@@ -540,14 +535,30 @@ void ScanQFloat(QFloat& q, istream& in)
 	//chuyen phan nguyen thanh nhi phan
 
 	int count = 0;
+	bool comma = false; //da xac dinh ',' hay chua
 
 	while (strNguyen.length() > 0 && strNguyen[0] != '0')
 	{
-		if (count > 127) break;
+		comma = true;
+		if (strNguyen == "1")
+			break;
+
+		//fraction chua khong du so
+		if (count > 111)
+		{
+			shiftRigthFrac(bit);
+		}
+
+
 		int tmp = strNguyen[strNguyen.length() - 1] - '0';
 
 		if (tmp % 2 != 0) {
-			bit[127 - count] = 1;
+			if (count <= 111)
+			{
+				bit[127 - count] = 1;
+			}
+			else
+				bit[16] = 1;
 		}
 
 		strNguyen = strDivTwo(strNguyen);
@@ -555,22 +566,32 @@ void ScanQFloat(QFloat& q, istream& in)
 	}
 
 	//so mu bang so chu so phan nguyen - 1
-	if (count > 0)
-		exponent = count - 1;
+	if (comma)
+		exponent = count;
+
+	//so vo cung
+	if (exponent > 16383)
+	{
+		q.setInfinity(isNegative);
+		delete[] bit;
+		return;
+	}
 
 	//doi ve dau day bit
 	int k = 16; //vi tri bit dau tien phan fraction
-
-	for (int i = 128 - count; i < 128; i++)
+	if (count <= 111)
 	{
-		swap(bit[k++], bit[i]);
-		if (k > 127)
-			break;
+		for (int i = 128 - count; i < 128; i++)
+		{
+			swap(bit[k++], bit[i]);
+			if (k > 127)
+				break;
+		}
 	}
 
 
 	//chuyen phan thap phan thanh nhi phan
-	bool ignore = !bool(count);
+	bool ignore = !comma;
 	strTPhan.insert(0, "0");
 	while (strTPhan.length() > 1)
 	{
@@ -580,6 +601,12 @@ void ScanQFloat(QFloat& q, istream& in)
 			plusOneBit(bit);
 			break;
 		}
+		// so khong chuan hoa duoc
+		if (count == 16383)
+		{
+			ignore = false;
+		}
+
 		if (strTPhan[0] == '1')
 		{
 			strTPhan[0] = '0';
@@ -639,31 +666,19 @@ void ScanQFloat(QFloat& q, istream& in)
 			q.data[i / 32] = q.data[i / 32] | (1 << (31 - i % 32));
 		}
 	}
-
 	delete[]bit;
 }
 
-void ScanBinQFloat(QFloat& x, istream& in)
+void ScanBinQFloat(QFloat& x, string s)
 {
-	string s;
-	in >> s;
+	//string s;
+	//in >> s;
 
 	if (s[0] == '.')
 	{
 		s.insert(0, "0");
 	}
 
-	for (int i = 0; i < 4; i++)
-	{
-		x.data[i] = 0;
-	}
-
-	// Mảng chứa 128bits
-	bool* bit = new bool[128];
-	for (int i = 0; i < 128; i++)
-	{
-		bit[i] = 0;
-	}
 
 	while (s[0] == '0' && s[1] != '.')
 	{
@@ -676,7 +691,7 @@ void ScanBinQFloat(QFloat& x, istream& in)
 		isNegative = 1;
 	}
 
-	bit[0] = isNegative;
+
 	int exponent = 0;
 
 	int viTriSo1DauTienTrongChuoiS = s.find('1');
@@ -684,10 +699,21 @@ void ScanBinQFloat(QFloat& x, istream& in)
 
 	if (viTriSo1DauTienTrongChuoiS == -1)
 	{
+		x.setZero();
 		return;
 	}
 	else
 	{
+		// Mảng chứa 128bits
+		bool* bit = new bool[128];
+		for (int i = 0; i < 128; i++)
+		{
+			bit[i] = 0;
+		}
+
+		bit[0] = isNegative;
+
+
 		if (viTriDauCham == -1)
 		{
 			exponent = s.length() - 1;
@@ -705,6 +731,23 @@ void ScanBinQFloat(QFloat& x, istream& in)
 			}
 		}
 
+		//so vo cung
+		if (exponent > 16383)
+		{
+			x.setInfinity(isNegative);
+			delete[] bit;
+			return;
+		}
+
+
+		//so khong chuan hoa duoc
+		if (exponent < -16383)
+		{
+			exponent = 16383;
+			viTriSo1DauTienTrongChuoiS = 16383 + viTriDauCham;
+		}
+
+
 		exponent += 16383;
 		for (int i = 1; i < 16; i++)
 		{
@@ -719,13 +762,8 @@ void ScanBinQFloat(QFloat& x, istream& in)
 				bit[k] = (s[i] - '0');
 				k++;
 			}
-		}
-		if (k < 127)
-		{
-			for (int i = k; i < 128; i++)
-			{
-				bit[i] = 0;
-			}
+			if (k > 127)
+				break;
 		}
 
 		for (int i = 0; i < 128; i++)
