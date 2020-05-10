@@ -22,7 +22,7 @@ QFloat::~QFloat()
 {
 }
 
-QFloat QFloat::operator=(QFloat& q)
+QFloat QFloat::operator=(const QFloat& q)
 {
 	if (this != &q)
 	{
@@ -361,8 +361,9 @@ void printQfloat(QFloat out, int outForm)
 		else strN = "1";
 		for (int i = 16; i < 16 + mu; ++i)
 		{
-			strMultiTwo(strN);
-			if (bit[i])strPlusOne(strN);
+			strN = strMultiTwo(strN);
+			if (bit[i]) 
+				strN = strPlusOne(strN);
 		}
 
 		string strTP = "0";
@@ -373,19 +374,19 @@ void printQfloat(QFloat out, int outForm)
 				if (!den && (mu < 0) && (i == 15)) {
 					strTP = strPlus(strTP, s2);
 					s2 += "0";
-					strDivTwo(s2);
+					s2 = strDivTwo(s2);
 				}
 				else {
 					strTP += "0";
 					s2 += "0";
-					strDivTwo(s2);
+					s2 = strDivTwo(s2);
 				}
 			}
 			else {
 				if (bit[i])strTP = strPlus(strTP, s2);
 				strTP += "0";
 				s2 += "0";
-				strDivTwo(s2);
+				s2 = strDivTwo(s2);
 			}
 		}
 		cout << strN << "." << strTP << endl;
@@ -543,8 +544,9 @@ void printQFloatToFile(fstream& f, QFloat out, int outForm)
 		else strN = "1";
 		for (int i = 16; i < 16 + mu; ++i)
 		{
-			strMultiTwo(strN);
-			if (bit[i])strPlusOne(strN);
+			strN = strMultiTwo(strN);
+			if (bit[i])
+				strN = strPlusOne(strN);
 		}
 
 		string strTP = "0";
@@ -555,19 +557,19 @@ void printQFloatToFile(fstream& f, QFloat out, int outForm)
 				if (!den && (mu < 0) && (i == 15)) {
 					strTP = strPlus(strTP, s2);
 					s2 += "0";
-					strDivTwo(s2);
+					s2 = strDivTwo(s2);
 				}
 				else {
 					strTP += "0";
 					s2 += "0";
-					strDivTwo(s2);
+					s2 = strDivTwo(s2);
 				}
 			}
 			else {
 				if (bit[i])strTP = strPlus(strTP, s2);
 				strTP += "0";
 				s2 += "0";
-				strDivTwo(s2);
+				s2 = strDivTwo(s2);
 			}
 		}
 		f << strN << "." << strTP << endl;
@@ -833,9 +835,10 @@ void ScanBinQFloat(QFloat& x, string s)
 	}
 
 	int isNegative = 0;
-	if (s[0] == '1')
+	if (s[0] == '-')
 	{
 		isNegative = 1;
+		s.erase(0, 1);
 	}
 
 

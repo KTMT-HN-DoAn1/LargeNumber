@@ -107,7 +107,7 @@ void QInt::printQInt(int outChoice)
 	Color(ColorCode_Yellow);
 }
 
-QInt QInt::operator&(const QInt& qint)
+QInt QInt::operator&(QInt qint)
 {
 	QInt result;
 	for (int i = 0; i < 4; i++)
@@ -276,7 +276,7 @@ QInt& QInt::RoR(int n)
 	return *this;
 }
 
-QInt QInt::operator+(QInt& q)
+QInt QInt::operator+(QInt q)
 {
 	QInt res;
 	int nho = 0;
@@ -305,13 +305,13 @@ QInt QInt::operator+(QInt& q)
 	return res;
 }
 
-QInt QInt::operator-(QInt& q)
+QInt QInt::operator-(QInt q)
 {
 	QInttoTwoComplement(q);
 	return(*this + q);
 }
 
-QInt QInt::operator*(QInt& q)
+QInt QInt::operator*(QInt q)
 {
 	bool negative = false;
 	if ((this->negative() && !q.negative()) || (!this->negative() && q.negative()))
@@ -327,11 +327,12 @@ QInt QInt::operator*(QInt& q)
 		QInttoTwoComplement(q);
 	}
 	QInt result;
-	QInt p(1);
 	while (!q.zero()) 
 	{
+		QInt p(1);
 		if (((q & p) - p).zero()) result = result + *this;
 		*this = *this << 1;
+		q = q >> 1;
 	}
 	
 	if (negative)
@@ -341,12 +342,12 @@ QInt QInt::operator*(QInt& q)
 	return result;
 }
 
-QInt QInt::operator/(QInt& q)
+QInt QInt::operator/(QInt q)
 {
 	QInt temp;
 	QInt p(1);
 	if (this->zero() || q.zero())return temp;
-	int k = 128;
+	int k = 126;
 	bool negative = false;
 	if ((this->negative() && !q.negative()) || (!this->negative() && q.negative()))
 	{
@@ -361,6 +362,7 @@ QInt QInt::operator/(QInt& q)
 		QInttoTwoComplement(q);
 	}
 	QInt result;
+	// ????
 	while (k != 0)
 	{
 		temp = temp | ((*this >> k)& p);

@@ -22,7 +22,7 @@ public:
 	void printQInt(int outChoice);
 
 	//Toán tử &.
-	QInt operator&(const QInt&);
+	QInt operator&(QInt);
 	QInt operator& (const int&);
 	//Toán tử |.
 	QInt operator|(const QInt&);
@@ -39,13 +39,13 @@ public:
 	//Phép toán xoay phải.
 	QInt& RoR(int n);
 	//Phép toán +
-	QInt operator + (QInt&);
+	QInt operator + (QInt);
 	//Phép toán -
-	QInt operator - (QInt&);
+	QInt operator - (QInt);
 	//Phép toán *
-	QInt operator *(QInt&);
+	QInt operator *(QInt);
 	//Phep toan /
-	QInt operator /(QInt&);
+	QInt operator /(QInt);
 	//Phep toan >
 	bool operator >(QInt&);
 	//Phep toan <
