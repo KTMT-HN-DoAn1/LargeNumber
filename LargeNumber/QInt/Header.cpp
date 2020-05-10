@@ -199,20 +199,9 @@ void funRunQIntArithmetic()
 	gotoXY(startMenuX + 2, startMenuY + 8);
 	cout << "Expression: " << endl;
 	gotoXY(startMenuX + 2 , startMenuY + 9);
-	
-	if (type != 2)
-	{
-		cin.ignore();
-		getline(cin, str); //nhận vào chuỗi phép toán
-	}
-	else
-	{
-		cin.ignore();
-		string temp; char c;
-		str = overLoadInput();
-		getline(cin, temp);
-		str += " "; str += temp;
-	}
+	cin.ignore();
+	getline(cin, str); //nhận vào chuỗi phép toán
+
 
 	QInt res = runArithmetic(str, type);
 

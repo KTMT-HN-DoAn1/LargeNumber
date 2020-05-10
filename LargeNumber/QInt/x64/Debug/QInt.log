@@ -1,0 +1,6 @@
+﻿  QInt.cpp
+D:\[19-20]_HK2\KTMT&HN\LargeNumber\LargeNumber\QInt\QInt.cpp(399,57): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+D:\[19-20]_HK2\KTMT&HN\LargeNumber\LargeNumber\QInt\QInt.cpp(405,56): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+D:\[19-20]_HK2\KTMT&HN\LargeNumber\LargeNumber\QInt\QInt.cpp(426,57): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+D:\[19-20]_HK2\KTMT&HN\LargeNumber\LargeNumber\QInt\QInt.cpp(432,56): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+  QInt.vcxproj -> D:\[19-20]_HK2\KTMT&HN\LargeNumber\LargeNumber\x64\Debug\QInt.exe

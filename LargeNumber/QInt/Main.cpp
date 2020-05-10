@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 	/*QInt q;
 	q.scanQInt(10, "1000");
 	q.printQInt(16);*/
-	/*
+
 	QFloat qf;
 	while (true)
 	{
@@ -78,7 +78,7 @@ int main(int argc, char* argv[])
 
 
 		system("pause");
-	}
-	*/
+
+	}*/
 
 }

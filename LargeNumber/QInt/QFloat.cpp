@@ -251,6 +251,7 @@ void QFloat::setNaN()
 	data[1] = (65535 << 16);	//0  111 1111 1111 1111  1000...
 }
 
+
 QFloat FBinToDec(bool* bit)
 {
 	QFloat res;
@@ -430,7 +431,6 @@ void printQfloat(QFloat out, int outForm)
 	}
 	}
 }
-	
 void shiftRigthFrac(bool* bit)
 {
 	for (int i = 127; i > 16; i--)
@@ -438,6 +438,7 @@ void shiftRigthFrac(bool* bit)
 		bit[i] = bit[i - 1];
 	}
 	bit[16] = 0;
+
 }
 
 
@@ -480,17 +481,12 @@ int checkInputQFloat(string s)
 
 void ScanQFloat(QFloat& q, string s)
 {
-	//string s;
-	//in >> s;
-
-
 	bool isNegative = false;
 	if (s[0] == '-')
 	{
 		isNegative = true;
 		s.erase(0, 1);
 	}
-
 
 	//tach thanh phan nguyen va phan thap phan
 	string strNguyen = "";
