@@ -214,12 +214,15 @@ QInt QInt::operator>>(const int& number)
 	}
 	else if (number < 128)
 	{
+		num = number % 32;
+
 		for (int i = 0; i < 3; i++)
 		{
 			result.data[i] = 0;
 		}
 		result.data[3] = this->data[0];
-		result.data[3] >>= number % 32;
+	
+		result.data[3] = this->data[0] >> num;
 
 	}
 	return result;
@@ -310,7 +313,7 @@ QInt QInt::operator-(QInt& q)
 
 QInt QInt::operator*(QInt& q)
 {
-	/*bool negative = false;
+	bool negative = false;
 	if ((this->negative() && !q.negative()) || (!this->negative() && q.negative()))
 	{
 		negative = true;
@@ -322,26 +325,19 @@ QInt QInt::operator*(QInt& q)
 	if (q.negative())
 	{
 		QInttoTwoComplement(q);
-	}*/
+	}
 	QInt result;
-	QInt t2;
-	int t1;
-	/*while (!q.zero()) 
+	QInt p(1);
+	while (!q.zero()) 
 	{
 		if (((q & p) - p).zero()) result = result + *this;
 		*this = *this << 1;
-	}*/
-	for (int i = 0; i < 128; i++)
-	{
-		t1 = (q >> i).data[3] & 1; 
-		t2 = (*this) & t1;
-		QInt temp = (t2 << i);
-		result = result + temp;
 	}
-	/*if (negative)
+	
+	if (negative)
 	{
 		QInttoTwoComplement(result);
-	}*/
+	}
 	return result;
 }
 

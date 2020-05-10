@@ -9,7 +9,11 @@
 
 int main(int argc, char* argv[])
 {
+<<<<<<< Updated upstream
 		
+=======
+	
+>>>>>>> Stashed changes
 	//khi không thực hiện bằng Command Prompt
 	if (argc == 1)
 	{
@@ -59,9 +63,20 @@ int main(int argc, char* argv[])
 	/*QInt q;
 	q.scanQInt(10, "1000");
 	q.printQInt(16);*/
+<<<<<<< Updated upstream
 	/*
 		QFloat qf;
 		ScanBinQFloat(qf, cin);
+=======
+
+	/*QFloat qf;
+	while (true)
+	{
+
+		string s;
+		cin >> s;
+		ScanQFloat(qf,s);
+>>>>>>> Stashed changes
 		bool* bit = new bool[128];
 		bit = FDecToBin(qf);
 
@@ -74,4 +89,8 @@ int main(int argc, char* argv[])
 
     
 		system("pause");
+<<<<<<< Updated upstream
+=======
+	}*/
+>>>>>>> Stashed changes
 }

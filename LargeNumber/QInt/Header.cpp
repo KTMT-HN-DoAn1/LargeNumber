@@ -55,11 +55,11 @@ Arithmetic Type(string s)
 
 QInt calcuQInt(int& type, string a, string b, string c)
 {
-	int temp = 0;
+	int temp = 1;
 	QInt x, y;
-	if (c != "<<" || c != ">>" || c != "ROL" || c != "ROR" || c != "rol" || c != "ror")
+	if (c == "<<" || c == ">>" || c == "ROL" || c == "ROR" || c == "rol" || c == "ror")
 	{
-		temp = 1;
+		temp = 0;
 	}//để đánh dáu nếu gặp toán tử dịch bit
 	switch (type)
 	{
@@ -68,8 +68,8 @@ QInt calcuQInt(int& type, string a, string b, string c)
 		//hàm thực hiện tính toán với hệ và các toán hạng, số hạng được truyền vào
 		//chuyển a và b thành 2 dãy bit trong QInt
 		x.scanQInt(2, a);
-		if (temp) y.scanQInt(10, b);
-		else 	y.scanQInt(2, b);
+		if (!temp) y.scanQInt(2, b);
+		else 	y.scanQInt(10, b);
 		break;
 	case 10: case 1://nếu là hệ 10
 		x.scanQInt(10, a);
@@ -199,20 +199,9 @@ void funRunQIntArithmetic()
 	gotoXY(startMenuX + 2, startMenuY + 8);
 	cout << "Expression: " << endl;
 	gotoXY(startMenuX + 2 , startMenuY + 9);
-	
-	if (type != 2)
-	{
-		cin.ignore();
-		getline(cin, str); //nhận vào chuỗi phép toán
-	}
-	else
-	{
-		cin.ignore();
-		string temp; char c;
-		str = overLoadInput();
-		getline(cin, temp);
-		str += " "; str += temp;
-	}
+	cin.ignore();
+	getline(cin, str); //nhận vào chuỗi phép toán
+
 
 	QInt res = runArithmetic(str, type);
 
