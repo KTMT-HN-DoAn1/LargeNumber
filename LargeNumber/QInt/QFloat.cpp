@@ -396,9 +396,23 @@ void printQfloat(QFloat out, int outForm)
 		if (den) {
 			cout << "0.";
 			for (int i = 0; i < 16383; i++) {
+
+				//Xuống dòng.
+				if (i == 64)
+					gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+				if (i == 123)
+					gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+
 				cout << "0";
 			}
 			for (int i = 16; i < 128; i++) {
+
+				//Xuống dòng.
+				if (i == 64)
+					gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+				if (i == 123)
+					gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+
 				cout << bit[i];
 			}
 		}
@@ -407,12 +421,26 @@ void printQfloat(QFloat out, int outForm)
 			if (mu >= 0) {
 				cout << "1";
 				for (int i = 16; i < 16 + mu; ++i) {
+
+					//Xuống dòng.
+					if (i == 64)
+						gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+					if (i == 123)
+						gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+
 					if (i < 128)cout << bit[i];
 					else cout << "0";
 				}
 				if (mu < 112) {
 					cout << ".";
 					for (int i = 16 + mu; i < 128; ++i) {
+
+						//Xuống dòng.
+						if (i == 64)
+							gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+						if (i == 123)
+							gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+						
 						cout << bit[i];
 					}
 				}
@@ -422,9 +450,22 @@ void printQfloat(QFloat out, int outForm)
 				cout << "0.";
 				for (int i = 0; i < mu; ++i)
 				{
+					//Xuống dòng.
+					if (i == 64)
+						gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+					if (i == 123)
+						gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+
 					cout << "0";
 				}
 				for (int i = 16; i < 128; ++i) {
+
+					//Xuống dòng.
+					if (i == 64)
+						gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+					if (i == 123)
+						gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+
 					cout << bit[i];
 				}
 			}
