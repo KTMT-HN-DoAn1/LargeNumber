@@ -237,6 +237,8 @@ void funRunQInt()
 	QInt qint;
 	do
 	{
+		system("cls");
+		printFrame();
 		int lenh1 = printModeFrame();
 		switch (lenh1)
 		{

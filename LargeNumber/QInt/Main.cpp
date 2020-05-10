@@ -15,6 +15,7 @@ int main(int argc, char* argv[])
 	{
 		do
 		{
+			system("cls");
 			printFrame();
 			int lenh = printMainMenu();
 			switch (lenh)
