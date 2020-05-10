@@ -329,6 +329,28 @@ void QIntFileProcessing(fstream& f, fstream& g)
 
 }
 
+void QFloatFileProcessing(fstream& f, fstream& g)
+{
+	while (!f.eof())
+	{
+		string a, b, c;
+		f >> a, b, c;
+		QFloat res;
+		if (a == "2" && b == "10")
+		{
+			ScanBinQFloat(res,c);
+			printQFloatToFile(g, res, 10);
+		}
+		else if (a == "10" && b == "2")
+		{
+			ScanQFloat(res, c);
+			printQFloatToFile(g, res, 2);
+		}
+	}
+	f.close();
+	g.close();
+}
+
 
 
 

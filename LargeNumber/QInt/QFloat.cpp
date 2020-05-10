@@ -441,6 +441,110 @@ void shiftRigthFrac(bool* bit)
 
 }
 
+void printQFloatToFile(fstream& f, QFloat out, int outForm)
+{
+	bool* bit = new bool[128];
+	for (int i = 0; i < 128; ++i)
+	{
+		bit[i] = 0;
+	}
+	for (int i = 0; i < 128; ++i)
+	{
+		bit[i] = (out.data[i / 32] >> (31 - i % 32) & 1);
+	}
+	bool negative = false;
+	if (bit[0])negative = true;
+	int mu = 0;
+	bool inf = true;
+	bool zero = true;
+	for (int i = 1; i < 16; ++i)
+	{
+		mu = mu * 2;
+		if (bit[i])
+		{
+			mu += 1;
+			zero = false;
+		}
+		else inf = false;
+	}
+	if (inf)
+	{
+		for (int i = 16; i < 128; i++)
+		{
+			if (bit[i]) f << "Not a Number" << endl;
+			return;
+		}
+		f << "Infinity" << endl;
+		return;
+	}
+	bool den = false;
+	if (zero) {
+		for (int i = 16; i < 128; i++)
+		{
+			if (bit[i])den = true;
+		}
+		f << "Zero" << endl;
+		return;
+	}
+	mu -= 16383;
+
+	switch (outForm)
+	{
+	case 10:
+	{
+		string strN = "";
+		if (den) {
+			strN = "0";
+			mu = -16382;
+		}
+		else strN = "1";
+		for (int i = 16; i < 16 + mu; ++i)
+		{
+			strMultiTwo(strN);
+			if (bit[i])strPlusOne(strN);
+		}
+
+		string strTP = "0";
+		string s2 = "5";
+		for (int i = 16 + mu; i < 128; ++i)
+		{
+			if (i <= 16) {
+				if (!den && (mu < 0) && (i = 15)) {
+					strTP = strPlus(strTP, s2);
+					s2 += "0";
+					strDivTwo(s2);
+				}
+				else {
+					strTP += "0";
+					s2 += "0";
+					strDivTwo(s2);
+				}
+			}
+			else {
+				if (bit[i])strTP = strPlus(strTP, s2);
+				strTP += "0";
+				s2 += "0";
+				strDivTwo(s2);
+			}
+		}
+		f << strN << "." << strTP << endl;
+		break;
+	}
+	case 2:
+	{
+		bool* bit = FDecToBin(out);
+		
+		for (int i = 0; i < 128; i++)
+		{
+			if (i == 1 || i == 16)
+				f << " ";
+			f << bit[i];
+		}
+		f << endl;
+	}
+	}
+}
+
 
 int countPoint(string s)
 {
