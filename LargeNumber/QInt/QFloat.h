@@ -11,7 +11,7 @@ public:
 	QFloat();
 	QFloat(QFloat& q);
 	~QFloat();
-	QFloat operator=(QFloat& q);
+	QFloat operator=(const QFloat& q);
 	QFloat operator=(string s);
 
 	void setZero();

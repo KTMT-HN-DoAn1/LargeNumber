@@ -336,11 +336,12 @@ void QFloatFileProcessing(fstream& f, fstream& g)
 	while (!f.eof())
 	{
 		string a, b, c;
-		f >> a, b, c;
+		f >> a >> b >> c;
 		QFloat res;
 		if (a == "2" && b == "10")
 		{
-			ScanBinQFloat(res,c);
+			bool* bit = BinStrToBin(c);
+			res = FBinToDec(bit);
 			printQFloatToFile(g, res, 10);
 		}
 		else if (a == "10" && b == "2")

@@ -324,7 +324,11 @@ void printConvertFrame(string& s, int& choice, int mode)
 		break;
 	case 2:
 		gotoXY(startMenuX + 2 + 8, startMenuY + 2);
-		s = overLoadInput();
+		if (mode == 1)
+			s = overLoadInput();
+		else
+			cin >> s;
+
 		break;
 	case 3:
 		if (mode != 1)
