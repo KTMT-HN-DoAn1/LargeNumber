@@ -360,12 +360,8 @@ QInt QInt::operator/(QInt& q)
 		QInttoTwoComplement(q);
 	}
 	QInt result;
-<<<<<<< Updated upstream
-	while (k != 0)
-=======
 	// ????
 	while (k != -1)
->>>>>>> Stashed changes
 	{
 		temp = temp | ((*this >> k)& p);
 		if (temp >= q)
