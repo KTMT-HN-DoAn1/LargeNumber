@@ -231,18 +231,18 @@ QInt QInt::operator>>(const int& number)
 QInt QInt::operator<<(const int& number)
 {
 	QInt result;
-	//Dịch trái phần tử cuối của mảng data.
-	result.data[3] = this->data[3] << number;
-	for (int i = 2; i >= 0; i--)
+	for (int i = 0; i < 4; i++)
 	{
+		int d = 0;
+		int dnext = 0;
+		if (i + number / 32 < 4)
+			d = this->data[i + number / 32] << number % 32;
+		if (i + number / 32 + 1 < 4 && number % 32 != 0)
+			dnext = this->data[i + number / 32 + 1] >> (32 - number % 32);
 
-		for (int j = 0; j < number; j++)
-		{
-			result.data[i + 1] = result.data[i + 1] | (((1 << (32 - j - 1)) & this->data[i]) >> (32 - number));
-		}
-		//Dịch trái các phần tử còn lại.
-		result.data[i] = this->data[i] << number;
+		result.data[i] = d | dnext;
 	}
+
 	return result;
 
 }
