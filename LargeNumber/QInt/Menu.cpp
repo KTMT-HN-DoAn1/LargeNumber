@@ -128,6 +128,7 @@ string overLoadInput() {
 			//Nếu đang ở vị trí sau dấu cách 1 bit thì xóa bit đó và dấu cách.
 			if (((countBit) % 4) == 1 && countBit != 1) {
 				printf("\b \b");
+				
 				countCh--;
 				bits.resize(countCh);
 			}
@@ -136,8 +137,8 @@ string overLoadInput() {
 			bits.resize(countCh);
 
 			//Nhảy lên dòng trên nếu user xóa tới kí tự đầu dòng.
-			//Dòng 2.
-			if (countCh == 108 && line == 2) {
+				//Dòng 2.
+			if (countCh == 109 && line == 2) {
 				gotoXY(startMenuX + 61, startMenuY + 2 + 1);
 				line = 1;
 			}
@@ -146,6 +147,7 @@ string overLoadInput() {
 				gotoXY(startMenuX + 60, startMenuY + 2);
 				line = 0;
 			}
+
 			printf("\b \b");
 			continue;
 		}
@@ -158,6 +160,18 @@ string overLoadInput() {
 			cout << " ";
 			bits.push_back(' ');
 			countCh++;
+		}
+
+		//Xuống dòng khi chạm biên.
+		//Xuống dòng 1.
+		if (countCh == 50) {
+			gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+			line = 1;
+		}
+		//Xuống dòng 2.
+		if (countCh == 110) {
+			gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+			line = 2;
 		}
 
 		//Chỉ nhận 2 kí tự 1 và 0.
@@ -175,17 +189,6 @@ string overLoadInput() {
 		bits.push_back(c);
 		countCh++;
 
-		//Xuống dòng khi chạm biên.
-		//Xuống dòng 1.
-		if (countCh == 50) {
-			gotoXY(startMenuX + 1, startMenuY + 2 + 1);
-			line = 1;
-		}
-		//Xuống dòng 2.
-		if (countCh == 110) {
-			gotoXY(startMenuX + 1, startMenuY + 2 + 2);
-			line = 2;
-		}
 		
 	}
 	//bits.resize(count);
@@ -206,6 +209,7 @@ void printQIntConvertResult(int choice, string s)
 	switch (choice)
 	{
 	case 1:
+		//170141183460469231731687303715884105727
 		q.scanQInt(10, s);
 
 		gotoXY(startMenuX + 2, startMenuY + 2);
@@ -228,6 +232,13 @@ void printQIntConvertResult(int choice, string s)
 		q.printQInt(16);
 		break;
 	case 3:
+		if (s.size() > 32)
+		{
+			gotoXY(startMenuX + 2, startMenuY + 5);
+			cout << "3. HEX: ";
+			cout << "The size of this hexa number is over 128.            ";
+			break;
+		}
 		q.scanQInt(16, s);
 
 		gotoXY(startMenuX + 2, startMenuY + 1);
@@ -255,6 +266,7 @@ void printQFloatConvertResult(int choice, string s)
 		bool* bit = new bool[128];
 		bit = FDecToBin(q);
 
+		/*
 		for (int i = 0; i < 128; i++)
 		{
 			if (i == 1 || i == 16)
@@ -262,10 +274,10 @@ void printQFloatConvertResult(int choice, string s)
 			cout << bit[i];
 		}
 		_getch();
+		*/
 		gotoXY(startMenuX + 2, startMenuY + 2);
 		cout << "2. BIN: ";
 		printQfloat(q, 2);
-
 		break;
 	}
 	case 2:
@@ -312,7 +324,11 @@ void printConvertFrame(string& s, int& choice, int mode)
 		break;
 	case 2:
 		gotoXY(startMenuX + 2 + 8, startMenuY + 2);
-		s = overLoadInput();
+		if (mode == 1)
+			s = overLoadInput();
+		else
+			cin >> s;
+
 		break;
 	case 3:
 		if (mode != 1)

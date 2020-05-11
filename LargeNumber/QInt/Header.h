@@ -40,3 +40,5 @@ void funRunQFloat();
 //Hàm xử lý các thao tác làm việc qua file
 void QIntFileProcessing(fstream& f, fstream& g);
 
+//Hàm xử lý các thao tác làm việc qua file QFloat
+void QFloatFileProcessing(fstream& f, fstream& g);

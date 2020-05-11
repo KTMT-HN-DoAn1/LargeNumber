@@ -237,6 +237,8 @@ void funRunQInt()
 	QInt qint;
 	do
 	{
+		system("cls");
+		printFrame();
 		int lenh1 = printModeFrame();
 		switch (lenh1)
 		{
@@ -321,6 +323,29 @@ void QIntFileProcessing(fstream& f, fstream& g)
 				else
 					g << "FALSE" << endl;
 			}
+		}
+	}
+	f.close();
+	g.close();
+}
+
+void QFloatFileProcessing(fstream& f, fstream& g)
+{
+	while (!f.eof())
+	{
+		string a, b, c;
+		f >> a >> b >> c;
+		QFloat res;
+		if (a == "2" && b == "10")
+		{
+			bool* bit = BinStrToBin(c);
+			res = FBinToDec(bit);
+			printQFloatToFile(g, res, 10);
+		}
+		else if (a == "10" && b == "2")
+		{
+			ScanQFloat(res, c);
+			printQFloatToFile(g, res, 2);
 		}
 	}
 	f.close();

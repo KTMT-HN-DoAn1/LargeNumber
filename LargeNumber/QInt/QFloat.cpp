@@ -22,7 +22,7 @@ QFloat::~QFloat()
 {
 }
 
-QFloat QFloat::operator=(QFloat& q)
+QFloat QFloat::operator=(const QFloat& q)
 {
 	if (this != &q)
 	{
@@ -312,7 +312,8 @@ void printQfloat(QFloat out, int outForm)
 		bit[i] = (out.data[i / 32] >> (31 - i % 32) & 1);
 	}
 	bool negative = false;
-	if (bit[0])negative = true;
+	if (bit[0])
+		negative = true;
 	int mu = 0;
 	bool inf = true;
 	bool zero = true;
@@ -330,7 +331,8 @@ void printQfloat(QFloat out, int outForm)
 	{
 		for (int i = 16; i < 128; i++)
 		{
-			if (bit[i])cout << "Not a Number" << endl;
+			if (bit[i])
+				cout << "Not a Number" << endl;
 			return;
 		}
 		cout << "Infinity" << endl;
@@ -359,8 +361,9 @@ void printQfloat(QFloat out, int outForm)
 		else strN = "1";
 		for (int i = 16; i < 16 + mu; ++i)
 		{
-			strMultiTwo(strN);
-			if (bit[i])strPlusOne(strN);
+			strN = strMultiTwo(strN);
+			if (bit[i]) 
+				strN = strPlusOne(strN);
 		}
 
 		string strTP = "0";
@@ -368,49 +371,86 @@ void printQfloat(QFloat out, int outForm)
 		for (int i = 16 + mu; i < 128; ++i)
 		{
 			if (i <= 16) {
-				if (!den && (mu < 0) && (i = 15)) {
+				if (!den && (mu < 0) && (i == 15)) {
 					strTP = strPlus(strTP, s2);
 					s2 += "0";
-					strDivTwo(s2);
+					s2 = strDivTwo(s2);
 				}
 				else {
 					strTP += "0";
 					s2 += "0";
-					strDivTwo(s2);
+					s2 = strDivTwo(s2);
 				}
 			}
 			else {
 				if (bit[i])strTP = strPlus(strTP, s2);
 				strTP += "0";
 				s2 += "0";
-				strDivTwo(s2);
+				s2 = strDivTwo(s2);
 			}
 		}
-		cout << strN << "." << strTP << endl;
-		break;
+
+		if (strN.length() > 50)
+			cout << "Out of range, please use file!";
+		else {
+
+			cout << strN << ".";
+			int tmp = 52 - strN.length() - 1;
+			cout << strTP.substr(0, tmp);
+		}
+
+			break;
 	}
 	case 2:
 	{
 		if (den) {
 			cout << "0.";
 			for (int i = 0; i < 16383; i++) {
+
+				//Xuống dòng.
+				if (i == 64)
+					gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+				if (i == 123)
+					gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+
 				cout << "0";
 			}
 			for (int i = 16; i < 128; i++) {
+
+				//Xuống dòng.
+				if (i == 64)
+					gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+				if (i == 123)
+					gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+
 				cout << bit[i];
 			}
 		}
 		else
 		{
-			if (mu > 0) {
+			if (mu >= 0) {
+				cout << "1";
 				for (int i = 16; i < 16 + mu; ++i) {
-					cout << "1";
+
+					//Xuống dòng.
+					if (i == 64)
+						gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+					if (i == 123)
+						gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+
 					if (i < 128)cout << bit[i];
 					else cout << "0";
 				}
 				if (mu < 112) {
 					cout << ".";
 					for (int i = 16 + mu; i < 128; ++i) {
+
+						//Xuống dòng.
+						if (i == 64)
+							gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+						if (i == 123)
+							gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+						
 						cout << bit[i];
 					}
 				}
@@ -420,9 +460,22 @@ void printQfloat(QFloat out, int outForm)
 				cout << "0.";
 				for (int i = 0; i < mu; ++i)
 				{
+					//Xuống dòng.
+					if (i == 64)
+						gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+					if (i == 123)
+						gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+
 					cout << "0";
 				}
 				for (int i = 16; i < 128; ++i) {
+
+					//Xuống dòng.
+					if (i == 64)
+						gotoXY(startMenuX + 1, startMenuY + 2 + 1);
+					if (i == 123)
+						gotoXY(startMenuX + 1, startMenuY + 2 + 2);
+
 					cout << bit[i];
 				}
 			}
@@ -439,6 +492,111 @@ void shiftRigthFrac(bool* bit)
 	}
 	bit[16] = 0;
 
+}
+
+void printQFloatToFile(fstream& f, QFloat out, int outForm)
+{
+	bool* bit = new bool[128];
+	for (int i = 0; i < 128; ++i)
+	{
+		bit[i] = 0;
+	}
+	for (int i = 0; i < 128; ++i)
+	{
+		bit[i] = (out.data[i / 32] >> (31 - i % 32) & 1);
+	}
+	bool negative = false;
+	if (bit[0])negative = true;
+	int mu = 0;
+	bool inf = true;
+	bool zero = true;
+	for (int i = 1; i < 16; ++i)
+	{
+		mu = mu * 2;
+		if (bit[i])
+		{
+			mu += 1;
+			zero = false;
+		}
+		else inf = false;
+	}
+	if (inf)
+	{
+		for (int i = 16; i < 128; i++)
+		{
+			if (bit[i]) f << "Not a Number" << endl;
+			return;
+		}
+		f << "Infinity" << endl;
+		return;
+	}
+	bool den = false;
+	if (zero) {
+		for (int i = 16; i < 128; i++)
+		{
+			if (bit[i])den = true;
+		}
+		f << "Zero" << endl;
+		return;
+	}
+	mu -= 16383;
+
+	switch (outForm)
+	{
+	case 10:
+	{
+		string strN = "";
+		if (den) {
+			strN = "0";
+			mu = -16382;
+		}
+		else strN = "1";
+		for (int i = 16; i < 16 + mu; ++i)
+		{
+			strN = strMultiTwo(strN);
+			if (bit[i])
+				strN = strPlusOne(strN);
+		}
+
+		string strTP = "0";
+		string s2 = "5";
+		for (int i = 16 + mu; i < 128; ++i)
+		{
+			if (i <= 16) {
+				if (!den && (mu < 0) && (i == 15)) {
+					strTP = strPlus(strTP, s2);
+					s2 += "0";
+					s2 = strDivTwo(s2);
+				}
+				else {
+					strTP += "0";
+					s2 += "0";
+					s2 = strDivTwo(s2);
+				}
+			}
+			else {
+				if (bit[i])strTP = strPlus(strTP, s2);
+				strTP += "0";
+				s2 += "0";
+				s2 = strDivTwo(s2);
+			}
+		}
+		f << strN << "." << strTP << endl;
+		break;
+	}
+	case 2:
+	{
+		bool* bit = FDecToBin(out);
+		
+		for (int i = 0; i < 128; i++)
+		{
+			if (i == 1 || i == 16)
+				f << " ";
+			f << bit[i];
+		}
+		f << endl;
+	}
+	}
 }
 
 
@@ -686,9 +844,10 @@ void ScanBinQFloat(QFloat& x, string s)
 	}
 
 	int isNegative = 0;
-	if (s[0] == '1')
+	if (s[0] == '-')
 	{
 		isNegative = 1;
+		s.erase(0, 1);
 	}
 
 
