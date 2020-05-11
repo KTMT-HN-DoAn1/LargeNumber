@@ -327,13 +327,17 @@ QInt QInt::operator*(QInt& q)
 		QInttoTwoComplement(q);
 	}
 	QInt result;
+<<<<<<< Updated upstream
 	QInt p(1);
 	while (!q.zero()) 
+=======
+	while (!q.zero())
+>>>>>>> Stashed changes
 	{
 		if (((q & p) - p).zero()) result = result + *this;
 		*this = *this << 1;
 	}
-	
+
 	if (negative)
 	{
 		QInttoTwoComplement(result);
@@ -361,7 +365,12 @@ QInt QInt::operator/(QInt& q)
 		QInttoTwoComplement(q);
 	}
 	QInt result;
+<<<<<<< Updated upstream
 	while (k != 0)
+=======
+	// ????
+	while (k != -1)
+>>>>>>> Stashed changes
 	{
 		temp = temp | ((*this >> k)& p);
 		if (temp >= q)
@@ -400,12 +409,14 @@ bool QInt::operator>(QInt& q)
 		for (int i = 127; i >= 0; i--)
 		{
 			if (((*this >> i).data[3] & 1) > ((q >> i).data[3] & 1))return false;
+			if (((q >> i).data[3] & 1) > ((*this >> i).data[3] & 1))return true;
 		}
 		return true;
 	}
 	for (int i = 127; i >= 0; i--)
 	{
 		if (((*this >> i).data[3] & 1) > ((q >> i).data[3] & 1))return true;
+		if (((q >> i).data[3] & 1) > ((*this >> i).data[3] & 1))return false;
 	}
 	return false;
 }
@@ -430,12 +441,14 @@ bool QInt::operator<(QInt& q)
 		for (int i = 127; i >= 0; i--)
 		{
 			if (((*this >> i).data[3] & 1) > ((q >> i).data[3] & 1))return true;
+			if (((q >> i).data[3] & 1) > ((*this >> i).data[3] & 1))return false;
 		}
 		return false;
 	}
 	for (int i = 127; i >= 0; i--)
 	{
 		if (((*this >> i).data[3] & 1) > ((q >> i).data[3] & 1))return false;
+		if (((q >> i).data[3] & 1) > ((*this >> i).data[3] & 1))return true;
 	}
 	return true;
 }

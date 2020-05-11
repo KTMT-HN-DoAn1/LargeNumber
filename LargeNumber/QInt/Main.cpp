@@ -11,6 +11,7 @@ int main(int argc, char* argv[])
 {
 
 	//khi không thực hiện bằng Command Prompt
+<<<<<<< Updated upstream
 	if (argc == 1)
 	{
 		do
@@ -37,20 +38,64 @@ int main(int argc, char* argv[])
 			}
 			if (lenh == 0) break;
 		} while (true);
+=======
+	//if (argc == 1)
+	//{
+	//	do
+	//	{
+	//		system("cls");
+	//		printFrame();
+	//		int lenh = printMainMenu();
+	//		switch (lenh)
+	//		{
+	//		case 1://thực hiện các chức năng với QInt
+	//		{
+	//			funRunQInt();
+	//		}break;
+	//		case 2://Hàm thực hiện các chức năng với QFloat
+	//			funRunQFloat();
+	//			break;
+	//		case 0:
+	//			lenh = 0;
+	//			break;
+	//		default:
+	//			gotoXY(startFrameX + 10, startMenuY + 7);
+	//			cout << "You entered the wrong code. Please try again.";
+	//			_getch();
+	//			break;
+	//		}
+	//		if (lenh == 0) break;
+	//	} while (true);
+>>>>>>> Stashed changes
 
-	}
-	//khi thực hiện bằng Command Prompt
-	else
+	//}
+	////khi thực hiện bằng Command Prompt
+	//else
 	{
 		//Kiểm tra file đầu vào là QInt_test hay là QFloat_test
 		if(1)
 		//khi không thực hiện bằng Command)
+<<<<<<< Updated upstream
 		{
+=======
+		//{
+>>>>>>> Stashed changes
 			fstream f, g;
 			f.open("QInt_input.txt");//f.open(argv[1]);
 			g.open("QInt_output.txt");//g.open("argv[2]);
 			QIntFileProcessing(f, g);
+<<<<<<< Updated upstream
 		}
+=======
+		//}
+		//else if (argv[1] == "QFloat_intput.txt" && argv[2] == "QFloat_output.txt")
+		//{
+			//fstream f, g;
+			//f.open("QFloat_input.txt");//f.open(argv[1]);
+			//g.open("QFloat_output.txt", 'w');//g.open("argv[2]);
+			//QFloatFileProcessing(f, g);
+		//}
+>>>>>>> Stashed changes
 	}
 
 	gotoXY(startFrameX, startMenuY + heightMenu + 5);
