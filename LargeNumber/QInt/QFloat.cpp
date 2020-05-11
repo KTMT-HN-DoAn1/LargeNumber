@@ -388,8 +388,17 @@ void printQfloat(QFloat out, int outForm)
 				strDivTwo(s2);
 			}
 		}
-		cout << strN << "." << strTP << endl;
-		break;
+
+		if (strN.length() > 50)
+			cout << "Out of range, please use file!";
+		else {
+
+			cout << strN << ".";
+			int tmp = 52 - strN.length() - 1;
+			cout << strTP.substr(0, tmp);
+		}
+
+			break;
 	}
 	case 2:
 	{

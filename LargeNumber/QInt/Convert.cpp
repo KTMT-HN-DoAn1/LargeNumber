@@ -164,11 +164,11 @@ string BintoHex(string strbin)
 string HexToBin(string hexstr)
 {
 	string binstr;
-	if (hexstr.size() > 32)
+	/*if (hexstr.size() > 32)
 	{
 		cout << "The size of this hexa number is over 128." << endl;
 		return "";
-	}
+	}*/
 	for (int i = 0; i < hexstr.size(); i++)
 	{
 		if (hexstr[i] == '0') binstr = binstr + "0000";//0
@@ -355,6 +355,24 @@ string strPlusOne(string s)
 //Hàm chuyển dãy nhị phân thành chuỗi số thập phân.
 string BinToDecStr(bool* bit)
 {
+	//Kiểm tra 1000 0000 ... tràn số.
+	bool isOverFlow = true;
+	if (bit[0])
+	{
+		for (int i = 1; i < 128; ++i)
+		{
+			if (bit[i])
+			{
+				isOverFlow = false;
+				break;
+			}
+		}
+
+		if (isOverFlow)
+		{
+			return "Out of range.";
+		}
+	}
 	//Kiểm tra âm, nếu âm thì chuyển về dạng bù 2 (dương).
 	bool isNegative = false;
 	if (bit[0])
@@ -654,15 +672,26 @@ void ConvertToAll(QInt& x)
 string strPlus(string s1, string s2)
 {
 	int nho = 0;
-	for (int i = s1.length() - 1; i >= 0; --i)
+	int n1 = s1.length();
+	int n2 = s2.length();
+	int i = 1;
+	string result;
+	while (i <= n1 || i <= n2)
 	{
-		int add1 = s1[i] - '0';
-		int add2 = s2[i] - '0';
+		int add1 = (n1 - i >= 0) ? (s1[n1 - i] - '0') : 0;
+		int add2 = (n2 - i >= 0) ? (s2[n2 - i] - '0') : 0;
 		add1 = add1 + add2 + nho;
-		if (add1 >= 10)nho = 1;
+		if (add1 >= 10)
+		{
+			nho = 1;
+			add1 -= 10;
+		}
 		else nho = 0;
 		char temp = add1 + '0';
-		s1[i] = temp;
+		result = temp + result;
+		i++;
 	}
-	return s1;
+	if (nho == 1)
+		result.insert(0, "1");
+	return result;
 }

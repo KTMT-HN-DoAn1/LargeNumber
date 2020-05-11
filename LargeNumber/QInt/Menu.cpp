@@ -209,6 +209,7 @@ void printQIntConvertResult(int choice, string s)
 	switch (choice)
 	{
 	case 1:
+		//170141183460469231731687303715884105727
 		q.scanQInt(10, s);
 
 		gotoXY(startMenuX + 2, startMenuY + 2);
@@ -231,6 +232,13 @@ void printQIntConvertResult(int choice, string s)
 		q.printQInt(16);
 		break;
 	case 3:
+		if (s.size() > 32)
+		{
+			gotoXY(startMenuX + 2, startMenuY + 5);
+			cout << "3. HEX: ";
+			cout << "The size of this hexa number is over 128.            ";
+			break;
+		}
 		q.scanQInt(16, s);
 
 		gotoXY(startMenuX + 2, startMenuY + 1);
