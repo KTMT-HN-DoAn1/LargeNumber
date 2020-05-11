@@ -9,9 +9,9 @@
 
 int main(int argc, char* argv[])
 {
-	//khi không thực hiện bằng Command Prompt
-	//if (argc == 1)
-	//{
+	/*khi không thực hiện bằng Command Prompt
+	if (argc == 1)
+	{*/
 		do
 		{
 			system("cls");
@@ -53,10 +53,10 @@ int main(int argc, char* argv[])
 		//}
 		//else if (argv[1] == "QFloat_intput.txt" && argv[2] == "QFloat_output.txt")
 		//{
-			fstream f, g;
-			f.open("QFloat_input.txt");//f.open(argv[1]);
-			g.open("QFloat_output.txt");//g.open("argv[2]);
-			QFloatFileProcessing(f, g);
+			//fstream f, g;
+			//f.open("QFloat_input.txt");//f.open(argv[1]);
+			//g.open("QFloat_output.txt");//g.open("argv[2]);
+			//QFloatFileProcessing(f, g);
 		//}
 
 	gotoXY(startFrameX, startMenuY + heightMenu + 5);
@@ -86,5 +86,6 @@ int main(int argc, char* argv[])
 		system("pause");
 
 	}*/
+
 
 }

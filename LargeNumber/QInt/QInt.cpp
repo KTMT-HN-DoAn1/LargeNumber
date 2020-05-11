@@ -363,15 +363,16 @@ QInt QInt::operator/(QInt q)
 	}
 	QInt result;
 	// ????
-	while (k != 0)
+	while (k != -1)
 	{
+		result = result << 1;
 		temp = temp | ((*this >> k)& p);
 		if (temp >= q)
 		{
 			result = result + p;
 			temp = temp - q;
 		}
-		else result = result << 1;
+		
 		temp = temp << 1;
 		k--;
 	}
@@ -402,12 +403,14 @@ bool QInt::operator>(QInt& q)
 		for (int i = 127; i >= 0; i--)
 		{
 			if (((*this >> i).data[3] & 1) > ((q >> i).data[3] & 1))return false;
+			if (((q >> i).data[3] & 1) > ((*this >> i).data[3] & 1))return true;
 		}
 		return true;
 	}
 	for (int i = 127; i >= 0; i--)
 	{
 		if (((*this >> i).data[3] & 1) > ((q >> i).data[3] & 1))return true;
+		if (((q >> i).data[3] & 1) > ((*this >> i).data[3] & 1))return false;
 	}
 	return false;
 }
