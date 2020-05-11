@@ -11,7 +11,6 @@ int main(int argc, char* argv[])
 {
 
 	//khi không thực hiện bằng Command Prompt
-<<<<<<< Updated upstream
 	if (argc == 1)
 	{
 		do
@@ -38,7 +37,6 @@ int main(int argc, char* argv[])
 			}
 			if (lenh == 0) break;
 		} while (true);
-=======
 	//if (argc == 1)
 	//{
 	//	do
@@ -66,27 +64,20 @@ int main(int argc, char* argv[])
 	//		}
 	//		if (lenh == 0) break;
 	//	} while (true);
->>>>>>> Stashed changes
-
 	//}
 	////khi thực hiện bằng Command Prompt
 	//else
 	{
 		//Kiểm tra file đầu vào là QInt_test hay là QFloat_test
-		if(1)
+		if(argv[1] == "QInt_intput.txt" && argv[2] == "QInt_output.txt")
 		//khi không thực hiện bằng Command)
-<<<<<<< Updated upstream
 		{
-=======
 		//{
->>>>>>> Stashed changes
 			fstream f, g;
 			f.open("QInt_input.txt");//f.open(argv[1]);
 			g.open("QInt_output.txt");//g.open("argv[2]);
 			QIntFileProcessing(f, g);
-<<<<<<< Updated upstream
 		}
-=======
 		//}
 		//else if (argv[1] == "QFloat_intput.txt" && argv[2] == "QFloat_output.txt")
 		//{
@@ -95,7 +86,6 @@ int main(int argc, char* argv[])
 			//g.open("QFloat_output.txt", 'w');//g.open("argv[2]);
 			//QFloatFileProcessing(f, g);
 		//}
->>>>>>> Stashed changes
 	}
 
 	gotoXY(startFrameX, startMenuY + heightMenu + 5);
