@@ -284,7 +284,7 @@ void QIntFileProcessing(fstream& f, fstream& g)
 		f >> s1 >> s2 >> s3;
 		f.get(c);
 		if (c != '\n') f >> s4;
-		if (s4 == "" || s2 != "~")
+		if (s4 == "" && (s4 == "" || s2 != "~"))
 			//1 dòng có 3 phần tử --> Convertion
 		{
 			g << convertRun(s1, s2, s3) << endl;
@@ -295,7 +295,7 @@ void QIntFileProcessing(fstream& f, fstream& g)
 			int type = atoi(s1.c_str());
 			if (s2 == "~") s4 = "0";
 			QInt res = calcuQInt(type, s2, s4, s3);
-			if (type == -1)
+			if (type != -1)
 			{
 				bool* bit = DecToBin(res);
 				//in kết quả ra file đích
@@ -324,11 +324,9 @@ void QIntFileProcessing(fstream& f, fstream& g)
 					g << "FALSE" << endl;
 			}
 		}
-		f.close();
-		g.close();
 	}
-	
-
+	f.close();
+	g.close();
 }
 
 void QFloatFileProcessing(fstream& f, fstream& g)

@@ -327,6 +327,7 @@ QInt QInt::operator*(QInt q)
 		QInttoTwoComplement(q);
 	}
 	QInt result;
+
 	while (!q.zero()) 
 	{
 		QInt p(1);
@@ -334,7 +335,7 @@ QInt QInt::operator*(QInt q)
 		*this = *this << 1;
 		q = q >> 1;
 	}
-	
+
 	if (negative)
 	{
 		QInttoTwoComplement(result);
@@ -435,12 +436,14 @@ bool QInt::operator<(QInt& q)
 		for (int i = 127; i >= 0; i--)
 		{
 			if (((*this >> i).data[3] & 1) > ((q >> i).data[3] & 1))return true;
+			if (((q >> i).data[3] & 1) > ((*this >> i).data[3] & 1))return false;
 		}
 		return false;
 	}
 	for (int i = 127; i >= 0; i--)
 	{
 		if (((*this >> i).data[3] & 1) > ((q >> i).data[3] & 1))return false;
+		if (((q >> i).data[3] & 1) > ((*this >> i).data[3] & 1))return true;
 	}
 	return true;
 }
