@@ -327,12 +327,7 @@ QInt QInt::operator*(QInt& q)
 		QInttoTwoComplement(q);
 	}
 	QInt result;
-<<<<<<< Updated upstream
-	QInt p(1);
-	while (!q.zero()) 
-=======
 	while (!q.zero())
->>>>>>> Stashed changes
 	{
 		if (((q & p) - p).zero()) result = result + *this;
 		*this = *this << 1;
