@@ -11,7 +11,7 @@ using namespace std;
 #include"Convert.h"
 
 
-enum Arithmetic { ADD, SUB, MULT, DIV, SL, SR, ROL, ROR, LESS, GREATER, EQUAL, LOE, GROE , AND, OR, XOR,NOT};
+enum Arithmetic { ADD, SUB, MULT, DIV, SL, SR, ROL, ROR, LESS, GREATER, EQUAL, LOE, GROE, AND, OR, XOR, NOT };
 
 //Hàm cắt chuồi thô ban đầu thành các số hạng và toán hạng với s là chuỗi thô ban đầu--> a, b là 2 số cần tính và c là phép tính
 void CutString(string s, string& a, string& b, string& c);

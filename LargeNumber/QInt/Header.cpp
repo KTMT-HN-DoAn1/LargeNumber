@@ -12,7 +12,9 @@ void CutString(string s, string& a, string& b,string& c)
 	if (p == NULL) return;
 	string temp(p);
 	a = temp;
-	for (int i = 0; i <= 1; i++)
+	int k = 1;
+	if (a == "~") { k = 0; }
+	for (int i = 0; i <= k; i++)
 	{
 		p = strtok(NULL, e);
 		switch (i)
@@ -45,8 +47,8 @@ Arithmetic Type(string s)
 	if (s == "==") return EQUAL;
 	if (s == ">=") return GROE;
 	if (s == "<=") return LOE;
-	if (s == "ROR") return ROR;
-	if (s == "ROL") return ROL;
+	if (s == "ROR" || s == "ror") return ROR;
+	if (s == "ROL" || s == "rol") return ROL;
 	if (s == "&") return AND;
 	if (s == "|") return OR;
 	if (s == "^") return XOR;
@@ -67,15 +69,25 @@ QInt calcuQInt(int& type, string a, string b, string c)
 	case 2://nếu là hệ 2
 		//hàm thực hiện tính toán với hệ và các toán hạng, số hạng được truyền vào
 		//chuyển a và b thành 2 dãy bit trong QInt
-		x.scanQInt(2, a);
-		if (!temp) y.scanQInt(10, b);
-		else 	y.scanQInt(2, b);
+		if (a == "~")
+			x.scanQInt(2, c);
+		else
+		{
+			if (!temp) y.scanQInt(10, b);
+			else
+			{
+				y.scanQInt(2, b);
+			}
+			x.scanQInt(2, a);
+		}
 		break;
 	case 10: case 1://nếu là hệ 10
+		if (a == "~") { x.scanQInt(10, c); break; }
 		x.scanQInt(10, a);
 		y.scanQInt(10, b);
 		break;
 	case 16: case 3://nế là hệ 16
+		if (a == "~") { x.scanQInt(16, c); break; }
 		x.scanQInt(16, a);
 		if (!temp) y.scanQInt(10, b);
 		else 	y.scanQInt(16, b);
@@ -87,8 +99,11 @@ QInt calcuQInt(int& type, string a, string b, string c)
 	{
 		type = -1;
 	}//để đánh dáu nếu gặp toán tử logic
-
-	Arithmetic k = Type(c);
+	Arithmetic k;
+	if (a == "~")
+		k = NOT;
+	else
+		k = Type(c);
 	QInt res(0);
 	switch (k)
 	{
@@ -102,6 +117,11 @@ QInt calcuQInt(int& type, string a, string b, string c)
 		res = x * y;
 		break;
 	case DIV:
+		if (y.zero())
+		{
+			type = -3;
+			return res;
+		}
 		res = x / y;
 		break;
 	case AND:
@@ -181,6 +201,7 @@ QInt calcuQInt(int& type, string a, string b, string c)
 
 QInt runArithmetic(string s, int& type)
 {
+	
 	string a, b, c;
 	CutString(s, a, b, c);//cắt chuỗi thành các số hạng và toán hạng
 	return calcuQInt(type, a, b, c);
@@ -204,6 +225,12 @@ void funRunQIntArithmetic()
 
 
 	QInt res = runArithmetic(str, type);
+	if (type == -3)
+	{
+		gotoXY(startFrameX + 10, startFrameY + 7);
+		cout << "MATH ERROR. The divisor must be different from zero." << endl;
+		return;
+	}
 
 	if (type == -1)
 	{
@@ -244,7 +271,12 @@ void funRunQInt()
 		{
 		case 1://thực hiện các phép toán
 		{
-			funRunQIntArithmetic();
+			do
+			{
+				funRunQIntArithmetic();
+				int key = _getch();
+				if (key != 13) break;
+			} while (true);
 		}
 		break;
 		case 2://các thao tác với chuyển dổi số giữa các hệ
@@ -277,14 +309,17 @@ void funRunQFloat()
 
 void QIntFileProcessing(fstream& f, fstream& g)
 {
+	int i = 0;
 	while (!f.eof())
 	{
+		cout << i++ << endl;
 		char c;
 		string s1, s2, s3, s4;
 		f >> s1 >> s2 >> s3;
 		f.get(c);
+		cout << "fff";
 		if (c != '\n') f >> s4;
-		if (s4 == "" && (s4 == "" || s2 != "~"))
+		if (s4 == "" && s2 != "~")
 			//1 dòng có 3 phần tử --> Convertion
 		{
 			g << convertRun(s1, s2, s3) << endl;

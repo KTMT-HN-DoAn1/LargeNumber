@@ -250,6 +250,7 @@ QInt QInt::operator<<(const int& number)
 
 QInt& QInt::RoL(int n)
 {
+	n = n % 128;
 	for (int i = 0; i < n; i++)
 	{
 		//Lấy bit đầu ra
@@ -264,6 +265,7 @@ QInt& QInt::RoL(int n)
 
 QInt& QInt::RoR(int n)
 {
+	n = n % 128;
 	for (int i = 0; i < n; i++)
 	{
 		//Lấy bit cuối ra
