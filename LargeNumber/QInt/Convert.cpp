@@ -256,7 +256,7 @@ bool* StrToBin(string decStr)
 	{
 		bit[i] = 0;
 	}
-
+	if (decStr == "0") return bit;
 	//Kiểm tra số âm.
 	bool isNegative = false;
 	if (decStr[0] == '-')

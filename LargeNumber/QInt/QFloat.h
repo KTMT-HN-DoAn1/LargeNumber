@@ -7,7 +7,7 @@ using namespace std;
 class QFloat
 {
 public:
-	int data[4];
+	unsigned int data[4];
 	QFloat();
 	QFloat(QFloat& q);
 	~QFloat();

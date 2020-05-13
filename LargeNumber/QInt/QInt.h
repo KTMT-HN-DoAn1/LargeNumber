@@ -8,7 +8,7 @@ using namespace std;
 class QInt
 {
 public:
-	int data[4];
+	unsigned int data[4];
 
 	QInt();
 	QInt(const QInt& q);
