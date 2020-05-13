@@ -348,7 +348,7 @@ void printQfloat(QFloat out, int outForm)
 		return;
 	}
 	mu -= 16383;
-
+	if (negative)cout << "-";
 	switch (outForm)
 	{
 	case 10:
@@ -396,7 +396,6 @@ void printQfloat(QFloat out, int outForm)
 		if (strN.length() > 50)
 			cout << "Out of range, please use file!";
 		else {
-
 			cout << strN << ".";
 			int tmp = 52 - strN.length() - 1;
 			cout << strTP.substr(0, tmp);
