@@ -40,20 +40,20 @@ int main(int argc, char* argv[])
 	}
 	//khi thực hiện bằng Command Prompt
 	else
+
 	{
-			
 		string temp1(argv[1]);
 		
 		//Kiểm tra file đầu vào là QInt_test hay là QFloat_test
 		if (temp1=="1")
 		{
-			cout << "Vao" << endl;
+			//cout << "Vao" << endl;
 			fstream f, g;
 			f.open("QInt_input.txt");//f.open(argv[1]);
 			g.open("QInt_output.txt");//g.open("argv[2]);
 			
 			QIntFileProcessing(f, g);
-			cout << "Done" << endl;
+			//cout << "Done" << endl;
 		} 
 		else if (temp1 == "2")
 		{

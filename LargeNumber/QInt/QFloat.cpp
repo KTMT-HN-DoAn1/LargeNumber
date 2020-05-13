@@ -338,7 +338,7 @@ void printQfloat(QFloat out, int outForm)
 		cout << "Infinity" << endl;
 		return;
 	}
-	bool den = false;
+	bool den = false;// biến check số chưa chuẩn hóa
 	if (zero) {
 		for (int i = 16; i < 128; i++)
 		{
@@ -348,7 +348,7 @@ void printQfloat(QFloat out, int outForm)
 		return;
 	}
 	mu -= 16383;
-
+	if (negative)cout << "-";
 	switch (outForm)
 	{
 	case 10:
@@ -358,7 +358,8 @@ void printQfloat(QFloat out, int outForm)
 			strN = "0";
 			mu = -16382;
 		}
-		else strN = "1";
+		else if (mu >= 0) strN = "1";
+		else strN = "0";
 		for (int i = 16; i < 16 + mu; ++i)
 		{
 			strN = strMultiTwo(strN);
@@ -370,9 +371,10 @@ void printQfloat(QFloat out, int outForm)
 		string s2 = "5";
 		for (int i = 16 + mu; i < 128; ++i)
 		{
-			if (i <= 16) {
+			if (i < 16) {
 				if (!den && (mu < 0) && (i == 15)) {
 					strTP = strPlus(strTP, s2);
+					strTP += "0";
 					s2 += "0";
 					s2 = strDivTwo(s2);
 				}
@@ -381,6 +383,7 @@ void printQfloat(QFloat out, int outForm)
 					s2 += "0";
 					s2 = strDivTwo(s2);
 				}
+
 			}
 			else {
 				if (bit[i])strTP = strPlus(strTP, s2);
@@ -393,7 +396,6 @@ void printQfloat(QFloat out, int outForm)
 		if (strN.length() > 50)
 			cout << "Out of range, please use file!";
 		else {
-
 			cout << strN << ".";
 			int tmp = 52 - strN.length() - 1;
 			cout << strTP.substr(0, tmp);
@@ -458,7 +460,7 @@ void printQfloat(QFloat out, int outForm)
 			}
 			else {
 				cout << "0.";
-				for (int i = 0; i < mu; ++i)
+				for (int i = 0; i < -mu - 1; ++i)//?
 				{
 					//Xuống dòng.
 					if (i == 64)
@@ -468,6 +470,7 @@ void printQfloat(QFloat out, int outForm)
 
 					cout << "0";
 				}
+				cout << "1";
 				for (int i = 16; i < 128; ++i) {
 
 					//Xuống dòng.
