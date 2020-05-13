@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
 			//g.open("QFloat_output.txt", 'w');//g.open("argv[2]);
 			//QFloatFileProcessing(f, g);
 		//}
-	}
+	//}
 
 
 	gotoXY(startFrameX, startMenuY + heightMenu + 5);
